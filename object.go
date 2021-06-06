@@ -37,6 +37,12 @@ type (
 		Append(child TObject)
 		Prepend(Child TObject)
 
+		SetMargin(pos enum.Pos, size enum.Size)
+		RemoveMargin(pos enum.Pos, size enum.Size)
+
+		SetPadding(pos enum.Pos, size enum.Size)
+		RemovePadding(pos enum.Pos, size enum.Size)
+
 		Release()
 	}
 
@@ -70,6 +76,30 @@ func (obj *Object) Append(child TObject) {
 
 func (obj *Object) Prepend(child TObject) {
 	obj.Element.Prepend(child)
+}
+
+// -----------------------------------------------------------------------------
+
+func (obj *Object) SetMargin(pos enum.Pos, size enum.Size) {
+	obj.Element.Add(pos.Margin(size))
+}
+
+// -----------------------------------------------------------------------------
+
+func (obj *Object) RemoveMargin(pos enum.Pos, size enum.Size) {
+	obj.Element.Remove(pos.Margin(size))
+}
+
+// -----------------------------------------------------------------------------
+
+func (obj *Object) SetPadding(pos enum.Pos, size enum.Size) {
+	obj.Element.Add(pos.Padding(size))
+}
+
+// -----------------------------------------------------------------------------
+
+func (obj *Object) RemovePadding(pos enum.Pos, size enum.Size) {
+	obj.Element.Remove(pos.Padding(size))
 }
 
 // -----------------------------------------------------------------------------
