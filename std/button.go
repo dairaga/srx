@@ -118,13 +118,14 @@ func (btn *button) SetOutline(outline bool) {
 // -----------------------------------------------------------------------------
 
 func (btn *button) SetSize(s enum.Size) {
-	old := btn.Size().Style("btn")
-	if old != "" {
-		btn.Element.Remove(old)
-	}
-	new := s.Style("btn")
-	if new != "" {
-		btn.Element.Add(new)
+	btn.Element.Remove(btn.Size().Style("btn"))
+
+	if s >= enum.Small && s <= enum.Large {
+		new := s.Style("btn")
+		if new != "" {
+			btn.Element.Add(new)
+		}
+
 	}
 	btn.Object.SetSize(s)
 }
