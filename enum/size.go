@@ -5,12 +5,12 @@ package enum
 type Size int
 
 const (
-	Zero Size = iota
-	One
-	Two
-	Tree
-	Four
-	Five
+	N0 Size = iota
+	N1
+	N2
+	N3
+	N4
+	N5
 	Auto
 	N50
 	N100
@@ -30,7 +30,7 @@ func (i Size) String() string {
 	if int(i) >= 0 && int(i) < len(szIndex)-1 {
 		return szName[szIndex[i]:szIndex[i+1]]
 	}
-	return Zero.String()
+	return N0.String()
 }
 
 // -----------------------------------------------------------------------------
@@ -42,12 +42,11 @@ func (i *Size) SetString(s string) {
 			return
 		}
 	}
-	*i = Zero
+	*i = N0
 }
 
 // -----------------------------------------------------------------------------
 
 func (i Size) Style(s string) string {
-
 	return s + "-" + i.String()
 }

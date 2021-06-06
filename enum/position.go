@@ -33,7 +33,7 @@ func (i Pos) Spacing() string {
 // -----------------------------------------------------------------------------
 
 func (i Pos) Margin(s Size) string {
-	if s >= Zero && s <= Auto {
+	if s >= N0 && s <= Auto {
 		return s.Style("m" + i.Spacing())
 	}
 	return ""
@@ -42,7 +42,7 @@ func (i Pos) Margin(s Size) string {
 // -----------------------------------------------------------------------------
 
 func (i Pos) Padding(s Size) string {
-	if s >= Zero && s <= Auto {
+	if s >= N0 && s <= Auto {
 		return s.Style("p" + i.Spacing())
 	}
 	return ""

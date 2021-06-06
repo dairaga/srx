@@ -26,8 +26,8 @@ func TestSize(t *testing.T) {
 
 	}
 
-	assert.Equal(t, Zero.String(), Size(1000).String())
+	assert.Equal(t, N0.String(), Size(1000).String())
 	typ.SetString("other color")
-	assert.Equal(t, Zero, typ)
+	assert.Equal(t, N0, typ)
 
 }

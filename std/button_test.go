@@ -65,7 +65,7 @@ func TestButton(t *testing.T) {
 
 	btn.SetSize(enum.Large)
 	assert.True(t, btn.(*button).Contains(enum.Large.Style("btn")))
-	btn.SetSize(enum.Zero)
+	btn.SetSize(enum.N0)
 	assert.False(t, btn.(*button).Contains(enum.Large.Style("btn")))
 	assert.Equal(t, w, btn.(*button).Prop("offsetWidth").Int())
 	assert.Equal(t, h, btn.(*button).Prop("offsetHeight").Int())
