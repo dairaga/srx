@@ -4,12 +4,15 @@ package std
 
 import (
 	"github.com/dairaga/srx"
+	"github.com/dairaga/srx/enum"
 	"github.com/dairaga/srx/js"
 )
 
 type (
 	TButton interface {
 		srx.TComponent
+		Type() enum.ButtonType
+		SetType(typ enum.ButtonType)
 		SetCaption(c string)
 		Caption() string
 	}
@@ -32,6 +35,20 @@ func (btn *button) Caption() string {
 
 func (btn *button) SetCaption(c string) {
 	btn.caption.SetText(c)
+}
+
+// -----------------------------------------------------------------------------
+
+func (btn *button) Type() enum.ButtonType {
+	var t enum.ButtonType
+	t.SetString(btn.Attr("type"))
+	return t
+}
+
+// -----------------------------------------------------------------------------
+
+func (btn *button) SetType(typ enum.ButtonType) {
+	btn.SetAttr("type", typ.String())
 }
 
 // -----------------------------------------------------------------------------
