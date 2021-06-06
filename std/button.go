@@ -15,6 +15,8 @@ type (
 		SetType(typ enum.ButtonType)
 		SetCaption(c string)
 		Caption() string
+		Value() string
+		SetValue(v string)
 	}
 
 	button struct {
@@ -49,6 +51,18 @@ func (btn *button) Type() enum.ButtonType {
 
 func (btn *button) SetType(typ enum.ButtonType) {
 	btn.SetAttr("type", typ.String())
+}
+
+// -----------------------------------------------------------------------------
+
+func (btn *button) Value() string {
+	return btn.Attr("value")
+}
+
+// -----------------------------------------------------------------------------
+
+func (btn *button) SetValue(v string) {
+	btn.SetAttr("value", v)
 }
 
 // -----------------------------------------------------------------------------

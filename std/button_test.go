@@ -26,4 +26,10 @@ func TestButtonCaption(t *testing.T) {
 
 	btn.SetType(enum.ButtonType(1000))
 	assert.Equal(t, enum.Button, btn.Type())
+
+	assert.Equal(t, "", btn.Value())
+
+	value := "abc"
+	btn.SetValue(value)
+	assert.Equal(t, value, btn.Value())
 }
