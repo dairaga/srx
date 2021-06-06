@@ -19,12 +19,15 @@ type (
 		SetValue(v string)
 		Color() enum.Color
 		SetColor(c enum.Color)
+		Outline() bool
+		SetOutline(outline bool)
 	}
 
 	button struct {
 		*srx.Component
 		caption *srx.Object
 		color   enum.Color
+		outline bool
 	}
 )
 
@@ -76,17 +79,44 @@ func (btn *button) Color() enum.Color {
 
 // -----------------------------------------------------------------------------
 
+func (btn *button) setOutlineColor(outline bool, color enum.Color) {
+	old := btn.color.Style("btn")
+	if btn.outline {
+		old = btn.color.Style("btn", "outline")
+	}
+
+	new := color.Style("btn")
+	if outline {
+		new = color.Style("btn", "outline")
+	}
+	btn.Replace(old, new)
+	btn.outline = outline
+	btn.color = color
+}
+
+// -----------------------------------------------------------------------------
+
 func (btn *button) SetColor(c enum.Color) {
-	btn.Element.Remove(btn.color.Style("btn"))
-	btn.Element.Add(c.Style("btn"))
-	btn.color = c
+	btn.setOutlineColor(btn.outline, c)
+}
+
+// -----------------------------------------------------------------------------
+
+func (btn *button) Outline() bool {
+	return btn.outline
+}
+
+// -----------------------------------------------------------------------------
+
+func (btn *button) SetOutline(outline bool) {
+	btn.setOutlineColor(outline, btn.color)
 }
 
 // -----------------------------------------------------------------------------
 
 func ButtonOf(owner srx.TComponent) TButton {
 	caption := srx.NewObject(js.Create("span"))
-	el := js.From(js.HTML(`<button type="button btn-primary" class="btn"></button>`))
+	el := js.From(js.HTML(`<button type="button" class="btn btn-primary"></button>`))
 	el.Append(caption)
 
 	btn := &button{
