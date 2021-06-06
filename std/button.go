@@ -17,11 +17,14 @@ type (
 		Caption() string
 		Value() string
 		SetValue(v string)
+		Color() enum.Color
+		SetColor(c enum.Color)
 	}
 
 	button struct {
 		*srx.Component
 		caption *srx.Object
+		color   enum.Color
 	}
 )
 
@@ -67,15 +70,31 @@ func (btn *button) SetValue(v string) {
 
 // -----------------------------------------------------------------------------
 
+func (btn *button) Color() enum.Color {
+	return btn.color
+}
+
+// -----------------------------------------------------------------------------
+
+func (btn *button) SetColor(c enum.Color) {
+	btn.Element.Remove(btn.color.Style("btn"))
+	btn.Element.Add(c.Style("btn"))
+	btn.color = c
+}
+
+// -----------------------------------------------------------------------------
+
 func ButtonOf(owner srx.TComponent) TButton {
 	caption := srx.NewObject(js.Create("span"))
-	el := js.From(js.HTML(`<button type="button" class="btn"></button>`))
+	el := js.From(js.HTML(`<button type="button btn-primary" class="btn"></button>`))
 	el.Append(caption)
 
 	btn := &button{
 		Component: srx.NewComponent(owner, el),
 		caption:   caption,
+		color:     enum.Primary,
 	}
+
 	if owner != nil {
 		owner.Add(btn)
 	}
