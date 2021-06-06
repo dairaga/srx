@@ -4,6 +4,7 @@ package std
 
 import (
 	"github.com/dairaga/srx"
+	"github.com/dairaga/srx/el"
 	"github.com/dairaga/srx/enum"
 	"github.com/dairaga/srx/js"
 )
@@ -28,7 +29,7 @@ type (
 
 	button struct {
 		*srx.Component
-		caption *srx.Object
+		caption el.TCaption
 		color   enum.Color
 		outline bool
 	}
@@ -39,13 +40,13 @@ var _ TButton = &button{}
 // -----------------------------------------------------------------------------
 
 func (btn *button) Caption() string {
-	return btn.caption.Text()
+	return btn.caption.Caption()
 }
 
 // -----------------------------------------------------------------------------
 
 func (btn *button) SetCaption(c string) {
-	btn.caption.SetText(c)
+	btn.caption.SetCaption(c)
 }
 
 // -----------------------------------------------------------------------------
@@ -151,7 +152,7 @@ func (btn *button) OnClick(fn func(TButton, js.TEvent)) {
 // -----------------------------------------------------------------------------
 
 func ButtonOf(owner srx.TComponent) TButton {
-	caption := srx.NewObject(js.Create("span"))
+	caption := el.CaptionOf()
 	el := js.From(js.HTML(`<button type="button" class="btn btn-primary"></button>`))
 	el.Append(caption)
 
