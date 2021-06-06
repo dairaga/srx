@@ -45,6 +45,8 @@ func ButtonOf(owner srx.TComponent) TButton {
 		Component: srx.NewComponent(owner, el),
 		caption:   caption,
 	}
-
+	if owner != nil {
+		owner.Add(btn)
+	}
 	return btn
 }

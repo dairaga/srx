@@ -28,6 +28,9 @@ type (
 		Hide()
 		Show()
 
+		Append(child TObject)
+		Prepend(Child TObject)
+
 		Release()
 	}
 
@@ -37,6 +40,18 @@ type (
 )
 
 var _ TObject = &Object{}
+
+// -----------------------------------------------------------------------------
+
+func (obj *Object) Append(child TObject) {
+	obj.Element.Append(child)
+}
+
+// -----------------------------------------------------------------------------
+
+func (obj *Object) Prepend(child TObject) {
+	obj.Element.Prepend(child)
+}
 
 // -----------------------------------------------------------------------------
 

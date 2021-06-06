@@ -41,12 +41,15 @@ func (com *Component) Owner() TComponent {
 // -----------------------------------------------------------------------------
 
 func (com *Component) Add(child TComponent) {
-	t := child.Tattoo()
-	old, ok := com.children[t]
-	if ok && old.OK() {
-		old.Release()
+	if child != nil && child.OK() {
+		t := child.Tattoo()
+		old, ok := com.children[t]
+		if ok && old.OK() {
+			old.Release()
+		}
+		com.children[t] = child
+		mem.alloc(child)
 	}
-	com.children[t] = child
 }
 
 // -----------------------------------------------------------------------------
@@ -65,7 +68,7 @@ func (com *Component) Release() {
 	if com.owner != nil {
 		com.owner.Remove(com)
 	}
-
+	mem.free(com)
 	com.Object.Release()
 }
 
