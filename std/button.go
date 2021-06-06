@@ -21,6 +21,9 @@ type (
 		SetColor(c enum.Color)
 		Outline() bool
 		SetOutline(outline bool)
+
+		Click()
+		OnClick(fn func(TButton, js.TEvent))
 	}
 
 	button struct {
@@ -124,6 +127,24 @@ func (btn *button) SetSize(s enum.Size) {
 		btn.Element.Add(new)
 	}
 	btn.Object.SetSize(s)
+}
+
+// -----------------------------------------------------------------------------
+
+func (btn *button) Click() {
+	btn.Element.Call("click")
+}
+
+// -----------------------------------------------------------------------------
+
+func (btn *button) OnClick(fn func(TButton, js.TEvent)) {
+	cb := js.FuncOf(func(this js.Value, args []js.Value) interface{} {
+		sender := srx.Lookup(this).(TButton)
+		evt := js.EventOf(args[0])
+		fn(sender, evt)
+		return nil
+	})
+	btn.EventTarget.On("click", cb)
 }
 
 // -----------------------------------------------------------------------------

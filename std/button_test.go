@@ -7,6 +7,7 @@ import (
 
 	"github.com/dairaga/srx"
 	"github.com/dairaga/srx/enum"
+	"github.com/dairaga/srx/js"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -68,4 +69,15 @@ func TestButton(t *testing.T) {
 	assert.False(t, btn.(*button).Contains(enum.Large.Style("btn")))
 	assert.Equal(t, w, btn.(*button).Prop("offsetWidth").Int())
 	assert.Equal(t, h, btn.(*button).Prop("offsetHeight").Int())
+
+	/* Click */
+	count := 0
+	caption = "Button Clicked"
+	btn.OnClick(func(sender TButton, evt js.TEvent) {
+		sender.SetCaption(caption)
+		count = 1
+	})
+	btn.Click()
+	assert.Equal(t, 1, count)
+	assert.Equal(t, caption, btn.Caption())
 }
