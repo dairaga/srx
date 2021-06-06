@@ -2,7 +2,10 @@
 
 package srx
 
-import "github.com/dairaga/srx/js"
+import (
+	"github.com/dairaga/srx/enum"
+	"github.com/dairaga/srx/js"
+)
 
 const (
 	srxTattoo = `data-srx`
@@ -28,6 +31,9 @@ type (
 		Hide()
 		Show()
 
+		Size() enum.Size
+		SetSize(s enum.Size)
+
 		Append(child TObject)
 		Prepend(Child TObject)
 
@@ -36,10 +42,23 @@ type (
 
 	Object struct {
 		*js.Element
+		size enum.Size
 	}
 )
 
 var _ TObject = &Object{}
+
+// -----------------------------------------------------------------------------
+
+func (obj *Object) Size() enum.Size {
+	return obj.size
+}
+
+// -----------------------------------------------------------------------------
+
+func (obj *Object) SetSize(s enum.Size) {
+	obj.size = s
+}
 
 // -----------------------------------------------------------------------------
 

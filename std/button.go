@@ -114,6 +114,20 @@ func (btn *button) SetOutline(outline bool) {
 
 // -----------------------------------------------------------------------------
 
+func (btn *button) SetSize(s enum.Size) {
+	old := btn.Size().Style("btn")
+	if old != "" {
+		btn.Element.Remove(old)
+	}
+	new := s.Style("btn")
+	if new != "" {
+		btn.Element.Add(new)
+	}
+	btn.Object.SetSize(s)
+}
+
+// -----------------------------------------------------------------------------
+
 func ButtonOf(owner srx.TComponent) TButton {
 	caption := srx.NewObject(js.Create("span"))
 	el := js.From(js.HTML(`<button type="button" class="btn btn-primary"></button>`))

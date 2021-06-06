@@ -55,4 +55,17 @@ func TestButton(t *testing.T) {
 	btn.SetOutline(true)
 	assert.True(t, btn.Outline())
 	btn.(*button).Contains(color.Style("btn", "outline"))
+
+	/* Size */
+	w := btn.(*button).Prop("offsetWidth").Int()
+	h := btn.(*button).Prop("offsetHeight").Int()
+	assert.NotEqual(t, 0, w)
+	assert.NotEqual(t, 0, h)
+
+	btn.SetSize(enum.Large)
+	assert.True(t, btn.(*button).Contains(enum.Large.Style("btn")))
+	btn.SetSize(enum.None)
+	assert.False(t, btn.(*button).Contains(enum.Large.Style("btn")))
+	assert.Equal(t, w, btn.(*button).Prop("offsetWidth").Int())
+	assert.Equal(t, h, btn.(*button).Prop("offsetHeight").Int())
 }
