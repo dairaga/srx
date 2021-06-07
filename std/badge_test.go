@@ -54,4 +54,20 @@ func TestBadge(t *testing.T) {
 	assert.True(t, b.(*badge).Contains(enum.Primary.Style("bg")))
 	assert.False(t, b.(*badge).Contains(old.Style("bg")))
 	assert.False(t, b.(*badge).Contains("text-dark"))
+
+	/* type */
+	assert.Equal(t, enum.RoundNone, b.Type())
+
+	b.SetType(enum.RoundCircle)
+	assert.Equal(t, enum.RoundCircle, b.Type())
+	assert.True(t, b.(*badge).Contains(enum.RoundCircle.String()))
+
+	b.SetType(enum.RoundPill)
+	assert.Equal(t, enum.RoundPill, b.Type())
+	assert.True(t, b.(*badge).Contains(enum.RoundPill.String()))
+
+	b.SetType(enum.RoundNone)
+	assert.Equal(t, enum.RoundNone, b.Type())
+	assert.False(t, b.(*badge).Contains(enum.RoundCircle.String()))
+	assert.False(t, b.(*badge).Contains(enum.RoundPill.String()))
 }

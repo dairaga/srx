@@ -13,6 +13,9 @@ type (
 	TBadge interface {
 		srx.TComponent
 
+		Type() enum.RoundType
+		SetType(t enum.RoundType)
+
 		Color() enum.Color
 		SetColor(color enum.Color)
 
@@ -28,10 +31,24 @@ type (
 		caption el.TCaption
 		assist  el.TAssist
 		color   enum.Color
+		typ     enum.RoundType
 	}
 )
 
 var _ TBadge = &badge{}
+
+// -----------------------------------------------------------------------------
+
+func (b *badge) Type() enum.RoundType {
+	return b.typ
+}
+
+// -----------------------------------------------------------------------------
+
+func (b *badge) SetType(t enum.RoundType) {
+	t.Replace(b.Element, b.typ)
+	b.typ = t
+}
 
 // -----------------------------------------------------------------------------
 
@@ -92,6 +109,7 @@ func BadgeOf(owner srx.TComponent) TBadge {
 		caption:   caption,
 		assist:    assist,
 		color:     enum.Secondary,
+		typ:       enum.RoundNone,
 	}
 	b.Element.Append(caption)
 	b.Element.Append(assist)
