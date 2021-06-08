@@ -14,18 +14,18 @@ const (
 )
 
 const (
-	spName = `tbsexy`
+	posName = `tbsexy`
 )
 
 var (
-	spIndex = [...]uint8{0, 1, 2, 3, 4, 5, 6, 10}
+	posIndex = [...]uint8{0, 1, 2, 3, 4, 5, 6, 10}
 )
 
 // -----------------------------------------------------------------------------
 
 func (i Pos) Spacing() string {
-	if int(i) >= 0 && int(i) < len(spIndex)-1 {
-		return spName[spIndex[i]:spIndex[i+1]]
+	if int(i) >= 0 && int(i) < len(posIndex)-1 {
+		return posName[posIndex[i]:posIndex[i+1]]
 	}
 	return ""
 }
