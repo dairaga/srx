@@ -248,7 +248,11 @@ func (el *Element) Show() {
 
 func (el *Element) Release() {
 	if el.OK() {
-		el.Call("remove")
+		// it maybe removed from DOM by other framework.
+		parent := el.Prop("parentNode")
+		if IsJSObject(parent) {
+			parent.Call("removeChild", el)
+		}
 		el.EventTarget.Release()
 	}
 }
