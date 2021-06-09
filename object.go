@@ -16,6 +16,7 @@ type (
 	// It is a js html element with tattoo for seeking object.
 	TObject interface {
 		js.Wrapper
+		Ref() *js.Element
 
 		OK() bool
 
@@ -53,6 +54,12 @@ type (
 )
 
 var _ TObject = &Object{}
+
+// -----------------------------------------------------------------------------
+
+func (obj *Object) Ref() *js.Element {
+	return obj.Element
+}
 
 // -----------------------------------------------------------------------------
 
