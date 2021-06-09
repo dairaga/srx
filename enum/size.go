@@ -11,6 +11,13 @@ const (
 	N3
 	N4
 	N5
+	N6
+	N7
+	N8
+	N9
+	N10
+	N11
+	N12
 	Auto
 	N50
 	N100
@@ -20,9 +27,9 @@ const (
 	Extra
 )
 
-const szName = "012345auto50100smmdlgxl"
+const szName = "0123456789101112auto50100smmdlgxl"
 
-var szIndex = [...]uint8{0, 1, 2, 3, 4, 5, 6, 10, 12, 15, 17, 19, 21, 23}
+var szIndex = [...]uint8{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 20, 22, 25, 27, 29, 31, 33}
 
 // -----------------------------------------------------------------------------
 
@@ -49,4 +56,13 @@ func (i *Size) SetString(s string) {
 
 func (i Size) Style(s string) string {
 	return s + "-" + i.String()
+}
+
+// -----------------------------------------------------------------------------
+
+func (i Size) Col() string {
+	if i >= N1 && i <= Auto {
+		return "col-" + i.String()
+	}
+	return "col"
 }
