@@ -14,12 +14,12 @@ func TestAlignment(t *testing.T) {
 		AlignStart:    {"start", "justify-content-start", "align-items-start"},
 		AlignEnd:      {"end", "justify-content-end", "align-items-end"},
 		AlignCenter:   {"center", "justify-content-center", "align-items-center"},
-		AlignBetween:  {"between", "justify-content-between", "align-items-start"},
-		AlignAround:   {"around", "justify-content-around", "align-items-start"},
-		AlignEvenly:   {"evenly", "justify-content-evenly", "align-items-start"},
-		AlignBaseline: {"baseline", "justify-content-start", "align-items-baseline"},
-		AlignStretch:  {"stretch", "justify-content-start", "align-items-stretch"},
-		Align(1000):   {"start", "justify-content-start", "align-items-start"},
+		AlignBetween:  {"between", "justify-content-between", ""},
+		AlignAround:   {"around", "justify-content-around", ""},
+		AlignEvenly:   {"evenly", "justify-content-evenly", ""},
+		AlignBaseline: {"baseline", "", "align-items-baseline"},
+		AlignStretch:  {"stretch", "", "align-items-stretch"},
+		Align(1000):   {"", "", ""},
 	}
 
 	for k, v := range data {

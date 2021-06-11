@@ -5,7 +5,8 @@ package enum
 type Align int
 
 const (
-	AlignStart Align = iota
+	AlignNone Align = iota
+	AlignStart
 	AlignEnd
 	AlignCenter
 	AlignBetween
@@ -17,7 +18,7 @@ const (
 
 const alName = `startendcenterbetweenaroundevenlybaselinestretch`
 
-var alIndex = [...]uint8{0, 5, 8, 14, 21, 27, 33, 41, 48}
+var alIndex = [...]uint8{0, 0, 5, 8, 14, 21, 27, 33, 41, 48}
 
 // -----------------------------------------------------------------------------
 
@@ -25,23 +26,35 @@ func (i Align) String() string {
 	if int(i) >= 0 && int(i) < len(alIndex)-1 {
 		return alName[alIndex[i]:alIndex[i+1]]
 	}
-	return AlignStart.String()
+	return ""
+}
+
+// -----------------------------------------------------------------------------
+
+func (i Align) IsHorizontal() bool {
+	return i >= AlignStart && i <= AlignEvenly
 }
 
 // -----------------------------------------------------------------------------
 
 func (i Align) Horizontal() string {
-	if i >= AlignStart && i <= AlignEvenly {
+	if i.IsHorizontal() {
 		return "justify-content-" + i.String()
 	}
-	return AlignStart.Horizontal()
+	return ""
+}
+
+// -----------------------------------------------------------------------------
+
+func (i Align) IsVertical() bool {
+	return (i >= AlignStart && i <= AlignCenter) || (i >= AlignBaseline && i <= AlignStretch)
 }
 
 // -----------------------------------------------------------------------------
 
 func (i Align) Vertical() string {
-	if (i >= AlignStart && i <= AlignCenter) || (i >= AlignBaseline && i <= AlignStretch) {
+	if i.IsVertical() {
 		return "align-items-" + i.String()
 	}
-	return AlignStart.Vertical()
+	return ""
 }
