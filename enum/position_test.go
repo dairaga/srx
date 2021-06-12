@@ -34,10 +34,11 @@ func TestPos(t *testing.T) {
 		End:    "e",
 		X:      "x",
 		Y:      "y",
+		All:    "",
 	}
 
 	for p, s := range pos {
-		assert.Equal(t, s, p.Spacing())
+		assert.Equal(t, s, p.String())
 		for k, v := range data {
 			assert.Equal(t, "m"+s+"-"+v, p.Margin(k))
 			assert.Equal(t, "p"+s+"-"+v, p.Padding(k))

@@ -66,3 +66,16 @@ func (i Size) Col() string {
 	}
 	return "col"
 }
+
+// -----------------------------------------------------------------------------
+
+func (i Size) Gutter(pos Pos) string {
+	if pos != X && pos != Y && pos != All {
+		pos = All
+	}
+
+	if i >= N0 && i <= N5 {
+		return "g" + pos.String() + "-" + i.String()
+	}
+	return "g" + pos.String() + "-" + N1.String()
+}
