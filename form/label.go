@@ -1,6 +1,6 @@
 // +build js,wasm
 
-package std
+package form
 
 import (
 	"github.com/dairaga/srx"
@@ -15,6 +15,9 @@ type (
 
 		Caption() string
 		SetCaption(c string)
+
+		Horizontal() bool
+		SetHorizontal(h bool)
 	}
 
 	label struct {
@@ -46,6 +49,23 @@ func (lb *label) Caption() string {
 
 func (lb *label) SetCaption(caption string) {
 	lb.Element.SetText((caption))
+}
+
+// -----------------------------------------------------------------------------
+
+func (lb *label) Horizontal() bool {
+	return lb.Ref().Contains("col-form-label")
+}
+
+// -----------------------------------------------------------------------------
+
+func (lb *label) SetHorizontal(h bool) {
+	lb.Ref().Remove("col-form-label", "form-label")
+	if h {
+		lb.Ref().Add("col-form-label")
+	} else {
+		lb.Ref().Add("form-label")
+	}
 }
 
 // -----------------------------------------------------------------------------

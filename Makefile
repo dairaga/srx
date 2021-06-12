@@ -1,4 +1,4 @@
-.PHONY: clean test srx js std enum
+.PHONY: clean test srx js std enum form
 
 GOPATH=$(shell go env GOPATH)
 WASMEXEC=${GOPATH}/bin/wasmbrowsertest
@@ -20,6 +20,9 @@ std: ${WASMEXEC}
 
 enum: ${WASMEXEC}
 	env WASM_HEADLESS=${WASM_HEADLESS} GOOS=js GOARCH=wasm go test ${PKG}/enum -exec=${WASMEXEC} -test.v
+
+form: ${WASMEXEC}
+	env WASM_HEADLESS=${WASM_HEADLESS} GOOS=js GOARCH=wasm go test ${PKG}/form -exec=${WASMEXEC} -test.v
 	
 ${WASMEXEC}:
 	go get -u github.com/dairaga/wasmbrowsertest
