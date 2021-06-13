@@ -1,6 +1,6 @@
 // +build js,wasm
 
-package std
+package form
 
 import (
 	"testing"
