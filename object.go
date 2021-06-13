@@ -22,6 +22,7 @@ type (
 
 		// ID returns js attribute id.
 		ID() string
+		SetID(id string)
 
 		// Disabled returns true if object is disabled, or returns true.
 		Disabled() bool

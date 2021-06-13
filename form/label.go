@@ -70,12 +70,19 @@ func (lb *label) SetHorizontal(h bool) {
 
 // -----------------------------------------------------------------------------
 
-func LabelOf(owner srx.TComponent) TLabel {
+func newLabel(owner srx.TComponent, class string) *label {
+	el := js.Create("label").Add(class)
 	ret := &label{
-		Component: srx.NewComponent(owner, js.From(`<label class="form-label"></label>`)),
+		Component: srx.NewComponent(owner, el),
 	}
 	if owner != nil {
 		owner.Add(ret)
 	}
 	return ret
+}
+
+// -----------------------------------------------------------------------------
+
+func LabelOf(owner srx.TComponent) TLabel {
+	return newLabel(owner, `form-label`)
 }

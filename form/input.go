@@ -8,11 +8,8 @@ import (
 )
 
 type (
-	TInput interface {
+	TBaseFormControl interface {
 		srx.TComponent
-		Type() string
-		SetType(t string)
-
 		Name() string
 		SetName(n string)
 
@@ -24,13 +21,21 @@ type (
 
 		Required() bool
 		SetRequired(required bool)
+	}
 
+	TBaseInput interface {
+		TBaseFormControl
 		SetPlaceholder(h string)
+	}
+
+	TInput interface {
+		TBaseInput
+		Type() string
+		SetType(t string)
 	}
 
 	input struct {
 		*srx.Component
-		input *js.Element
 	}
 )
 
@@ -39,92 +44,101 @@ var _ TInput = &input{}
 // -----------------------------------------------------------------------------
 
 func (i *input) Type() string {
-	return i.input.Attr("type")
+	return i.Attr("type")
 }
 
 // -----------------------------------------------------------------------------
 
 func (i *input) SetType(t string) {
-	i.input.SetAttr("type", t)
+	i.SetAttr("type", t)
 }
 
 // -----------------------------------------------------------------------------
 
 func (i *input) Name() string {
-	return i.input.Attr("name")
+	return i.Attr("name")
 }
 
 // -----------------------------------------------------------------------------
 
 func (i *input) SetName(n string) {
-	i.input.SetAttr("name", n)
+	i.SetAttr("name", n)
 
 }
 
 // -----------------------------------------------------------------------------
 
 func (i *input) Value() string {
-	return i.input.Attr("value")
+	return i.Element.Prop("value").String()
 }
 
 // -----------------------------------------------------------------------------
 
 func (i *input) SetValue(v string) {
-	i.input.SetAttr("value", v)
+	i.Element.SetProp("value", v)
 }
 
 // -----------------------------------------------------------------------------
 
 func (i *input) ReadOnly() bool {
-	return i.input.HasAttr("readonly")
+	return i.HasAttr("readonly")
 }
 
 // -----------------------------------------------------------------------------
 
 func (i *input) SetReadOnly(only bool) {
 	if only {
-		i.input.SetAttr("readonly", "true")
+		i.SetAttr("readonly", "true")
 	} else {
-		i.input.RemoveAttr("readonly")
+		i.RemoveAttr("readonly")
 	}
 }
 
 // -----------------------------------------------------------------------------
 
 func (i *input) Required() bool {
-	return i.input.HasAttr("required")
+	return i.HasAttr("required")
 }
 
 // -----------------------------------------------------------------------------
 
 func (i *input) SetRequired(required bool) {
 	if required {
-		i.input.SetAttr("required", "true")
+		i.SetAttr("required", "true")
 	} else {
-		i.input.RemoveAttr("required")
+		i.RemoveAttr("required")
 	}
 }
 
 // -----------------------------------------------------------------------------
 
 func (i *input) SetPlaceholder(h string) {
-	i.input.SetAttr("placeholder", h)
+	i.SetAttr("placeholder", h)
 }
 
 // -----------------------------------------------------------------------------
 
-func InputOf(owner srx.TComponent) TInput {
-	div := js.Create("div")
-	in := js.Create("input").Add("form-control")
-	div.Append(in)
+func newFormCtrol(owner srx.TComponent) *input {
+	return newInput(owner, "input", "form-control")
+}
+
+// -----------------------------------------------------------------------------
+
+func newInput(owner srx.TComponent, tag, class string) *input {
+	el := js.Create(tag).Add(class)
 
 	ret := &input{
-		Component: srx.NewComponent(owner, div),
-		input:     in,
+		Component: srx.NewComponent(owner, el),
 	}
 	if owner != nil {
 		owner.Add(ret)
 	}
 
 	return ret
+}
+
+// -----------------------------------------------------------------------------
+
+func InputOf(owner srx.TComponent) TInput {
+	return newFormCtrol(owner)
 }
