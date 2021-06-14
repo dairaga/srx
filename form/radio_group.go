@@ -71,6 +71,7 @@ func (g *radiogroup) AddRadio(value, caption string, checked bool) (TRadio, TLab
 	check.SetID(g.name + "_" + value)
 	check.SetCheck(checked)
 	check.SetValue(value)
+	g.children = append(g.children, check)
 
 	div.Append(check)
 

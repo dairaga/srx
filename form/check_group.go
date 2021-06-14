@@ -22,6 +22,9 @@ type (
 		SetName(name string)
 		Inline() bool
 		SetInline(inline bool)
+		Children() []TCheck
+		Child(index int) TCheck
+		ChildLen() int
 	}
 
 	TCheckGroup interface {
@@ -37,8 +40,9 @@ type (
 
 	basecheckgroup struct {
 		*srx.Component
-		name   string
-		inline bool
+		name     string
+		inline   bool
+		children []TCheck
 	}
 
 	checkgroup struct {
@@ -128,6 +132,27 @@ func (g *basecheckgroup) SetInline(inline bool) {
 
 // -----------------------------------------------------------------------------
 
+func (g *basecheckgroup) Children() []TCheck {
+	return g.children
+}
+
+// -----------------------------------------------------------------------------
+
+func (g *basecheckgroup) Child(index int) TCheck {
+	if index >= 0 && index < len(g.children) {
+		return g.children[index]
+	}
+	return nil
+}
+
+// -----------------------------------------------------------------------------
+
+func (g *basecheckgroup) ChildLen() int {
+	return len(g.children)
+}
+
+// -----------------------------------------------------------------------------
+
 func (g *checkgroup) Value() []string {
 	values := []string{}
 	g.Element.QueryAll(`input[type="checkbox"]`).Foreach(
@@ -176,7 +201,7 @@ func (g *checkgroup) AddCheck(value, caption string, checked bool) (TCheck, TLab
 	check.SetID(g.name + "_" + value)
 	check.SetCheck(checked)
 	check.SetValue(value)
-
+	g.children = append(g.children, check)
 	div.Append(check)
 
 	lb := newLabel(g, `form-check-label`)
