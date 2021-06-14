@@ -4,6 +4,7 @@ package std
 
 import (
 	"github.com/dairaga/srx"
+	"github.com/dairaga/srx/el"
 	"github.com/dairaga/srx/enum"
 	"github.com/dairaga/srx/js"
 )
@@ -13,13 +14,15 @@ type (
 		srx.TComponent
 		AlignHorizontal(al enum.Align)
 		AlignVertical(al enum.Align)
-		AppendCol(child srx.TComponent, span enum.Size)
+		AddCell(span enum.Size, children ...srx.TObject) el.TCell
+		el.TCeller
 	}
 
 	grid struct {
 		*srx.Component
-		h enum.Align
-		v enum.Align
+		h     enum.Align
+		v     enum.Align
+		cells []el.TCell
 	}
 )
 
@@ -52,9 +55,45 @@ func (g *grid) AlignVertical(al enum.Align) {
 
 // -----------------------------------------------------------------------------
 
-func (g *grid) AppendCol(child srx.TComponent, span enum.Size) {
-	child.Ref().Add(span.Col())
-	g.Element.Append(child)
+func (g *grid) AddCell(span enum.Size, children ...srx.TObject) el.TCell {
+	cell := el.Cell(children...)
+	cell.Ref().Add(span.Col())
+	g.Element.Append(cell)
+	g.cells = append(g.cells, cell)
+	return cell
+}
+
+// -----------------------------------------------------------------------------
+
+func (g *grid) Append(children ...srx.TObject) {
+	g.AddCell(enum.N0, children...)
+}
+
+// -----------------------------------------------------------------------------
+
+func (g *grid) Prepend(children ...srx.TObject) {
+	g.AddCell(enum.N0, children...)
+}
+
+// -----------------------------------------------------------------------------
+
+func (g *grid) Cell(index int) el.TCell {
+	if index >= 0 && index < len(g.cells) {
+		return g.cells[index]
+	}
+	return nil
+}
+
+// -----------------------------------------------------------------------------
+
+func (g *grid) Cells() []el.TCell {
+	return g.cells
+}
+
+// -----------------------------------------------------------------------------
+
+func (g *grid) CellLen() int {
+	return len(g.cells)
 }
 
 // -----------------------------------------------------------------------------

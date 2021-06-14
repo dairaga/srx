@@ -8,6 +8,12 @@ import (
 )
 
 type (
+	TCeller interface {
+		Cells() []TCell
+		Cell(index int) TCell
+		CellLen() int
+	}
+
 	TCell interface {
 		srx.TObject
 	}
@@ -21,8 +27,11 @@ var _ TCell = &cell{}
 
 // -----------------------------------------------------------------------------
 
-func Cell() TCell {
-	return &caption{
+func Cell(children ...srx.TObject) TCell {
+	ret := &cell{
 		Object: srx.NewObject(js.Create("div")),
 	}
+
+	ret.Append(children...)
+	return ret
 }

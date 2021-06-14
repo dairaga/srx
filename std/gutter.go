@@ -14,8 +14,9 @@ type (
 		srx.TComponent
 		SetGutterSize(x, y enum.Size)
 		SetItemsPerRow(n enum.ItemsPerRow)
-		Insert(items ...srx.TObject) el.TCell
-		Cell(index int) el.TCell
+		AddCell(items ...srx.TObject) el.TCell
+
+		el.TCeller
 	}
 
 	gutter struct {
@@ -51,11 +52,8 @@ func (g *gutter) SetItemsPerRow(n enum.ItemsPerRow) {
 
 // -----------------------------------------------------------------------------
 
-func (g *gutter) Insert(items ...srx.TObject) el.TCell {
-	cell := el.Cell()
-	for i := range items {
-		cell.Append(items[i])
-	}
+func (g *gutter) AddCell(items ...srx.TObject) el.TCell {
+	cell := el.Cell(items...)
 	cell.Ref().Add(g.items.String())
 	g.Element.Append(cell)
 	g.cells = append(g.cells, cell)
@@ -65,13 +63,13 @@ func (g *gutter) Insert(items ...srx.TObject) el.TCell {
 // -----------------------------------------------------------------------------
 
 func (g *gutter) Append(children ...srx.TObject) {
-	g.Insert(children...)
+	g.AddCell(children...)
 }
 
 // -----------------------------------------------------------------------------
 
 func (g *gutter) Prepend(children ...srx.TObject) {
-	g.Insert(children...)
+	g.AddCell(children...)
 }
 
 // -----------------------------------------------------------------------------
@@ -81,6 +79,18 @@ func (g *gutter) Cell(index int) el.TCell {
 		return g.cells[index]
 	}
 	return nil
+}
+
+// -----------------------------------------------------------------------------
+
+func (g *gutter) Cells() []el.TCell {
+	return g.cells
+}
+
+// -----------------------------------------------------------------------------
+
+func (g *gutter) CellLen() int {
+	return len(g.cells)
 }
 
 // -----------------------------------------------------------------------------

@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/dairaga/srx"
+	"github.com/dairaga/srx/el"
 	"github.com/dairaga/srx/enum"
 	"github.com/dairaga/srx/js"
 	"github.com/stretchr/testify/assert"
@@ -15,23 +16,16 @@ func TestGrid(t *testing.T) {
 
 	g := GridPannelOf(srx.Root())
 	g.Ref().SetStyle("height", "100px")
-	c1 := PanelOf(g)
-	c1.Ref().SetText("c1")
-	c2 := PanelOf(g)
-	c2.Ref().SetText("c2")
-	c3 := PanelOf(g)
-	c3.Ref().SetText("c3")
-
-	g.AppendCol(c1, enum.N2)
-	g.AppendCol(c2, enum.N3)
-	g.AppendCol(c3, enum.N4)
+	g.AddCell(enum.N2, el.Caption("grid-span-2"))
+	g.AddCell(enum.N3, el.Caption("grid-span-3"))
+	g.AddCell(enum.N4, el.Caption("grid-span-4"))
 	js.Append(g)
 
 	/* init */
 	assert.True(t, g.Ref().Contains("row"))
-	assert.True(t, c1.Ref().Contains("col-2"))
-	assert.True(t, c2.Ref().Contains("col-3"))
-	assert.True(t, c3.Ref().Contains("col-4"))
+	assert.True(t, g.Cell(0).Ref().Contains("col-2"))
+	assert.True(t, g.Cell(1).Ref().Contains("col-3"))
+	assert.True(t, g.Cell(2).Ref().Contains("col-4"))
 
 	al := []enum.Align{
 		enum.AlignNone,

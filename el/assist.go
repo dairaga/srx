@@ -3,6 +3,8 @@
 package el
 
 import (
+	"fmt"
+
 	"github.com/dairaga/srx"
 	"github.com/dairaga/srx/js"
 )
@@ -35,10 +37,24 @@ func (a *assist) SetDescription(d string) {
 
 // -----------------------------------------------------------------------------
 
-func Assist() TAssist {
-	return &assist{
+func newAssist(content string) *assist {
+	ret := &assist{
 		Object: srx.NewObject(
 			js.From(`<span class="visually-hidden"></span>`),
 		),
 	}
+	ret.SetDescription(content)
+	return ret
+}
+
+// -----------------------------------------------------------------------------
+
+func Assist(a ...interface{}) TAssist {
+	return newAssist(fmt.Sprint(a...))
+}
+
+// -----------------------------------------------------------------------------
+
+func Assistf(format string, a ...interface{}) TAssist {
+	return newAssist(fmt.Sprintf(format, a...))
 }

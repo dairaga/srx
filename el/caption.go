@@ -3,6 +3,8 @@
 package el
 
 import (
+	"fmt"
+
 	"github.com/dairaga/srx"
 	"github.com/dairaga/srx/js"
 )
@@ -35,8 +37,22 @@ func (c *caption) SetCaption(caption string) {
 
 // -----------------------------------------------------------------------------
 
-func Caption() TCaption {
-	return &caption{
+func newCaption(content string) *caption {
+	ret := &caption{
 		Object: srx.NewObject(js.Create("span")),
 	}
+	ret.SetCaption(content)
+	return ret
+}
+
+// -----------------------------------------------------------------------------
+
+func Caption(a ...interface{}) TCaption {
+	return newCaption(fmt.Sprint(a...))
+}
+
+// -----------------------------------------------------------------------------
+
+func Captionf(format string, a ...interface{}) TCaption {
+	return newCaption(fmt.Sprintf(format, a...))
 }

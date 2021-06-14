@@ -3,7 +3,6 @@
 package std
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/dairaga/srx"
@@ -18,9 +17,7 @@ func TestGutter(t *testing.T) {
 	g := GutterPanelOf(srx.Root())
 
 	for i := 0; i < 3; i++ {
-		caption := el.Caption()
-		caption.SetCaption(fmt.Sprintf("item-%d", i+1))
-		g.Append(caption)
+		g.Append(el.Captionf("gutter-item-%d", i+1))
 	}
 	js.Append(g)
 
@@ -62,17 +59,16 @@ func TestGutter(t *testing.T) {
 		g.SetItemsPerRow(per)
 
 		for j := 0; j < count; j++ {
-			caption := el.Caption()
-			caption.SetCaption(fmt.Sprintf("item-%d", i+1))
-			g.Append(caption)
+			g.Append(el.Captionf("gutter-%d-item-%d", count, i+1))
 		}
 		js.Append(g)
 
 		assert.True(t, g.Ref().Contains("row"))
 		assert.True(t, g.Ref().Contains(enum.N1.Gutter(enum.X)))
 		assert.True(t, g.Ref().Contains(enum.N1.Gutter(enum.Y)))
-		for _, elm := range g.Ref().QueryAll("div") {
-			assert.True(t, elm.Contains(per.String()))
+
+		for i := range g.Cells() {
+			assert.True(t, g.Cell(i).Ref().Contains(per.String()))
 		}
 
 		for k := range size {
