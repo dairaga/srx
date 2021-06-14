@@ -13,7 +13,7 @@ import (
 )
 
 func TestInput(t *testing.T) {
-	typ := ""
+	typ := "text"
 	name := ""
 	value := ""
 	readonly := false
@@ -29,7 +29,7 @@ func TestInput(t *testing.T) {
 	assert.Equal(t, readonly, input.ReadOnly())
 	assert.Equal(t, required, input.Required())
 
-	typ = "text"
+	typ = "password"
 	name = "test_input"
 	value = "test_input_value"
 	readonly = true
@@ -154,23 +154,37 @@ func TestInput(t *testing.T) {
 	ckgroup := CheckGroupOf(p)
 	ckgroup.SetName("test_check")
 	ckgroup.SetInline(true)
-	ckgroup.AddCheck("A", "AAA", true)
-	ckgroup.AddCheck("B", "BBB", false)
+	a1, _ := ckgroup.AddCheck("A", "AAA", true)
+	b1, _ := ckgroup.AddCheck("B", "BBB", false)
 	lb = LabelOf(p)
 	lb.SetCaption("checkbox")
 	p.Append(lb)
 	p.Append(ckgroup)
 	gutter.Append(p)
+	assert.EqualValues(t, []string{"A"}, ckgroup.Value())
+	assert.True(t, a1.Checked())
+	ckgroup.SetValue("A", "B")
+	assert.True(t, a1.Checked())
+	assert.True(t, b1.Checked())
 
 	p = std.PanelOf(gutter)
-	ckgroup = CheckGroupOf(p)
-	ckgroup.SetName("test_Radio")
-	ckgroup.SetInline(true)
-	ckgroup.AddRadio("Y", "Yes", true)
-	ckgroup.AddRadio("N", "No", false)
+	ragroup := RadioGroupOf(p)
+	ragroup.SetName("test_Radio")
+	ragroup.SetInline(true)
+	r1, _ := ragroup.AddRadio("Y", "Yes", true)
+	r2, _ := ragroup.AddRadio("N", "No", false)
+	assert.Equal(t, "Y", ragroup.Value())
+	assert.True(t, r1.Checked())
+	assert.False(t, r2.Checked())
+
+	ragroup.SetValue("N")
+	assert.Equal(t, "N", ragroup.Value())
+	assert.False(t, r1.Checked())
+	assert.True(t, r2.Checked())
+
 	lb = LabelOf(p)
-	lb.SetCaption("checkbox")
+	lb.SetCaption("radio")
 	p.Append(lb)
-	p.Append(ckgroup)
+	p.Append(ragroup)
 	gutter.Append(p)
 }

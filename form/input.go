@@ -44,81 +44,72 @@ var _ TInput = &input{}
 // -----------------------------------------------------------------------------
 
 func (i *input) Type() string {
-	return i.Attr("type")
+	return i.Prop("type").String()
 }
 
 // -----------------------------------------------------------------------------
 
 func (i *input) SetType(t string) {
-	i.SetAttr("type", t)
+	i.SetProp("type", t)
 }
 
 // -----------------------------------------------------------------------------
 
 func (i *input) Name() string {
-	return i.Attr("name")
+	return i.Prop("name").String()
 }
 
 // -----------------------------------------------------------------------------
 
 func (i *input) SetName(n string) {
-	i.SetAttr("name", n)
-
+	//i.SetAttr("name", n)
+	i.SetProp("name", n)
 }
 
 // -----------------------------------------------------------------------------
 
 func (i *input) Value() string {
-	return i.Element.Prop("value").String()
+	return i.Prop("value").String()
 }
 
 // -----------------------------------------------------------------------------
 
 func (i *input) SetValue(v string) {
-	i.Element.SetProp("value", v)
+	i.SetProp("value", v)
 }
 
 // -----------------------------------------------------------------------------
 
 func (i *input) ReadOnly() bool {
-	return i.HasAttr("readonly")
+	return i.Prop("readOnly").Bool()
 }
 
 // -----------------------------------------------------------------------------
 
 func (i *input) SetReadOnly(only bool) {
-	if only {
-		i.SetAttr("readonly", "true")
-	} else {
-		i.RemoveAttr("readonly")
-	}
+	i.SetProp("readOnly", only)
 }
 
 // -----------------------------------------------------------------------------
 
 func (i *input) Required() bool {
-	return i.HasAttr("required")
+	return i.Prop("required").Bool()
 }
 
 // -----------------------------------------------------------------------------
 
 func (i *input) SetRequired(required bool) {
-	if required {
-		i.SetAttr("required", "true")
-	} else {
-		i.RemoveAttr("required")
-	}
+	i.SetProp("required", required)
 }
 
 // -----------------------------------------------------------------------------
 
 func (i *input) SetPlaceholder(h string) {
-	i.SetAttr("placeholder", h)
+	i.SetProp("placeholder", h)
 }
 
 // -----------------------------------------------------------------------------
 
-// TODO: refactor function name: newFormControl, newInput
 func newInput(owner srx.TComponent) *input {
 	return newFormControl(owner, "input", "form-control")
 }
