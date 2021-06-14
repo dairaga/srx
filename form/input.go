@@ -118,14 +118,15 @@ func (i *input) SetPlaceholder(h string) {
 
 // -----------------------------------------------------------------------------
 
-func newFormCtrol(owner srx.TComponent) *input {
-	return newInput(owner, "input", "form-control")
+// TODO: refactor function name: newFormControl, newInput
+func newInput(owner srx.TComponent) *input {
+	return newFormControl(owner, "input", "form-control")
 }
 
 // -----------------------------------------------------------------------------
 
-func newInput(owner srx.TComponent, tag, class string) *input {
-	el := js.Create(tag).Add(class)
+func newFormControl(owner srx.TComponent, tagName, class string) *input {
+	el := js.Create(tagName).Add(class)
 
 	ret := &input{
 		Component: srx.NewComponent(owner, el),
@@ -140,5 +141,5 @@ func newInput(owner srx.TComponent, tag, class string) *input {
 // -----------------------------------------------------------------------------
 
 func InputOf(owner srx.TComponent) TInput {
-	return newFormCtrol(owner)
+	return newInput(owner)
 }

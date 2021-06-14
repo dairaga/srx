@@ -15,7 +15,7 @@ type (
 // -----------------------------------------------------------------------------
 
 func EmailOf(owner srx.TComponent) TEmail {
-	input := newFormCtrol(owner)
+	input := newInput(owner)
 	input.SetType("email")
 	return input
 }

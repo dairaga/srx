@@ -15,7 +15,7 @@ type (
 // -----------------------------------------------------------------------------
 
 func FileOf(owner srx.TComponent) TFile {
-	input := newFormCtrol(owner)
+	input := newInput(owner)
 	input.SetType("file")
 	return input
 }

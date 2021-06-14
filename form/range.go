@@ -85,7 +85,7 @@ func (r *rangeInput) SetStep(v int) {
 
 func RangeOf(owner srx.TComponent) TRange {
 	ret := &rangeInput{
-		input: newInput(owner, "input", "form-range"),
+		input: newFormControl(owner, "input", "form-range"),
 	}
 	ret.SetType("range")
 	ret.SetMin(0)

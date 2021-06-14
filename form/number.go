@@ -10,7 +10,7 @@ type TNumber = TRange
 
 func NumberOf(owner srx.TComponent) TNumber {
 	ret := &rangeInput{
-		input: newFormCtrol(owner),
+		input: newInput(owner),
 	}
 	ret.SetType("number")
 	ret.SetMin(0)

@@ -15,7 +15,7 @@ type (
 // -----------------------------------------------------------------------------
 
 func PasswordOf(owner srx.TComponent) TPassword {
-	input := newFormCtrol(owner)
+	input := newInput(owner)
 	input.SetType("password")
 	return input
 }

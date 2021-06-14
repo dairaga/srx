@@ -15,7 +15,7 @@ type (
 // -----------------------------------------------------------------------------
 
 func ColorPickerOf(owner srx.TComponent) TColorPicker {
-	input := newFormCtrol(owner)
+	input := newInput(owner)
 	input.SetType("color")
 	input.Ref().Add("form-control-color")
 	return input

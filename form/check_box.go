@@ -59,7 +59,7 @@ func (c *check) SetCheck(checked bool) {
 // -----------------------------------------------------------------------------
 
 func newCheck(owner srx.TComponent) *check {
-	input := newInput(owner, "input", "form-check-input")
+	input := newFormControl(owner, "input", "form-check-input")
 	input.SetType("checkbox")
 	ret := &check{
 		input: input,
@@ -76,7 +76,7 @@ func CheckOf(owner srx.TComponent) *check {
 // -----------------------------------------------------------------------------
 
 func newRadio(owner srx.TComponent) *check {
-	input := newInput(owner, "input", "form-check-input")
+	input := newFormControl(owner, "input", "form-check-input")
 	input.SetType("radio")
 	ret := &check{
 		input: input,

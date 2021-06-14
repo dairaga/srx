@@ -15,7 +15,7 @@ type (
 // -----------------------------------------------------------------------------
 
 func TextOf(owner srx.TComponent) TText {
-	input := newFormCtrol(owner)
+	input := newInput(owner)
 	input.SetType("text")
 	return input
 }

@@ -35,7 +35,7 @@ func (s *sel) AddOption(caption, value string) {
 
 func SelectOf(owner srx.TComponent) TSelect {
 	return &sel{
-		input: newInput(owner, "select", "form-select"),
+		input: newFormControl(owner, "select", "form-select"),
 		//opts:  nil,
 	}
 }
