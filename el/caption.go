@@ -9,7 +9,7 @@ import (
 
 type (
 	TCaption interface {
-		js.Wrapper
+		srx.TObject
 		Caption() string
 		SetCaption(caption string)
 	}
@@ -35,7 +35,7 @@ func (c *caption) SetCaption(caption string) {
 
 // -----------------------------------------------------------------------------
 
-func CaptionOf() TCaption {
+func Caption() TCaption {
 	return &caption{
 		Object: srx.NewObject(js.Create("span")),
 	}

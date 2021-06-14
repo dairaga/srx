@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/dairaga/srx"
+	"github.com/dairaga/srx/el"
 	"github.com/dairaga/srx/enum"
 	"github.com/dairaga/srx/js"
 	"github.com/stretchr/testify/assert"
@@ -17,9 +18,9 @@ func TestGutter(t *testing.T) {
 	g := GutterPanelOf(srx.Root())
 
 	for i := 0; i < 3; i++ {
-		p := PanelOf(g)
-		p.Ref().SetText(fmt.Sprintf("item-%d", i+1))
-		g.Append(p)
+		caption := el.Caption()
+		caption.SetCaption(fmt.Sprintf("item-%d", i+1))
+		g.Append(caption)
 	}
 	js.Append(g)
 
@@ -61,9 +62,9 @@ func TestGutter(t *testing.T) {
 		g.SetItemsPerRow(per)
 
 		for j := 0; j < count; j++ {
-			p := PanelOf(g)
-			p.Ref().SetText(fmt.Sprintf("item-%d", j+1)).Add("border")
-			g.Append(p)
+			caption := el.Caption()
+			caption.SetCaption(fmt.Sprintf("item-%d", i+1))
+			g.Append(caption)
 		}
 		js.Append(g)
 

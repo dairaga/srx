@@ -36,8 +36,8 @@ type (
 		Size() enum.Size
 		SetSize(s enum.Size)
 
-		Append(child TObject)
-		Prepend(Child TObject)
+		Append(children ...TObject)
+		Prepend(Children ...TObject)
 
 		SetMargin(pos enum.Pos, size enum.Size)
 		RemoveMargin(pos enum.Pos, size enum.Size)
@@ -76,14 +76,18 @@ func (obj *Object) SetSize(s enum.Size) {
 
 // -----------------------------------------------------------------------------
 
-func (obj *Object) Append(child TObject) {
-	obj.Element.Append(child)
+func (obj *Object) Append(children ...TObject) {
+	for i := range children {
+		obj.Element.Append(children[i])
+	}
 }
 
 // -----------------------------------------------------------------------------
 
-func (obj *Object) Prepend(child TObject) {
-	obj.Element.Prepend(child)
+func (obj *Object) Prepend(children ...TObject) {
+	for i := range children {
+		obj.Element.Prepend(children[i])
+	}
 }
 
 // -----------------------------------------------------------------------------

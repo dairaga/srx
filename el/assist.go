@@ -9,7 +9,7 @@ import (
 
 type (
 	TAssist interface {
-		js.Wrapper
+		srx.TObject
 		Description() string
 		SetDescription(d string)
 	}
@@ -35,7 +35,7 @@ func (a *assist) SetDescription(d string) {
 
 // -----------------------------------------------------------------------------
 
-func AssistOf() TAssist {
+func Assist() TAssist {
 	return &assist{
 		Object: srx.NewObject(
 			js.From(`<span class="visually-hidden"></span>`),

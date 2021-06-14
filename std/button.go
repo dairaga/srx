@@ -152,7 +152,7 @@ func (btn *button) OnClick(fn func(TButton, js.TEvent)) {
 // -----------------------------------------------------------------------------
 
 func ButtonOf(owner srx.TComponent) TButton {
-	caption := el.CaptionOf()
+	caption := el.Caption()
 	el := js.From(js.HTML(`<button type="button" class="btn btn-primary"></button>`))
 	el.Append(caption)
 

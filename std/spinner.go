@@ -74,7 +74,7 @@ func (s *spinner) SetDescription(d string) {
 // -----------------------------------------------------------------------------
 
 func SpinnerOf(owner srx.TComponent) TSpinner {
-	assist := el.AssistOf()
+	assist := el.Assist()
 	el := js.From(`<div class="spinner-border text-dark" role="status"></div>`)
 	ret := &spinner{
 		Component: srx.NewComponent(owner, el),

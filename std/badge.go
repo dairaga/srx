@@ -101,8 +101,8 @@ func (b *badge) SetColor(c enum.Color) {
 // -----------------------------------------------------------------------------
 
 func BadgeOf(owner srx.TComponent) TBadge {
-	caption := el.CaptionOf()
-	assist := el.AssistOf()
+	caption := el.Caption()
+	assist := el.Assist()
 	el := js.From(`<span class="badge bg-secondary"></span>`)
 	b := &badge{
 		Component: srx.NewComponent(owner, el),

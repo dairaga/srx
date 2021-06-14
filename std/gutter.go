@@ -4,6 +4,7 @@ package std
 
 import (
 	"github.com/dairaga/srx"
+	"github.com/dairaga/srx/el"
 	"github.com/dairaga/srx/enum"
 	"github.com/dairaga/srx/js"
 )
@@ -13,6 +14,8 @@ type (
 		srx.TComponent
 		SetGutterSize(x, y enum.Size)
 		SetItemsPerRow(n enum.ItemsPerRow)
+		Insert(items ...srx.TObject) el.TCell
+		Cell(index int) el.TCell
 	}
 
 	gutter struct {
@@ -20,6 +23,7 @@ type (
 		x     enum.Size
 		y     enum.Size
 		items enum.ItemsPerRow
+		cells []el.TCell
 	}
 )
 
@@ -47,9 +51,36 @@ func (g *gutter) SetItemsPerRow(n enum.ItemsPerRow) {
 
 // -----------------------------------------------------------------------------
 
-func (g *gutter) Append(item srx.TObject) {
-	item.Ref().Add(g.items.String())
-	g.Element.Append(item)
+func (g *gutter) Insert(items ...srx.TObject) el.TCell {
+	cell := el.Cell()
+	for i := range items {
+		cell.Append(items[i])
+	}
+	cell.Ref().Add(g.items.String())
+	g.Element.Append(cell)
+	g.cells = append(g.cells, cell)
+	return cell
+}
+
+// -----------------------------------------------------------------------------
+
+func (g *gutter) Append(children ...srx.TObject) {
+	g.Insert(children...)
+}
+
+// -----------------------------------------------------------------------------
+
+func (g *gutter) Prepend(children ...srx.TObject) {
+	g.Insert(children...)
+}
+
+// -----------------------------------------------------------------------------
+
+func (g *gutter) Cell(index int) el.TCell {
+	if index >= 0 && index < len(g.cells) {
+		return g.cells[index]
+	}
+	return nil
 }
 
 // -----------------------------------------------------------------------------
