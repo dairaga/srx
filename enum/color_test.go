@@ -30,8 +30,8 @@ func TestColor(t *testing.T) {
 		assert.Equal(t, "btn-outline-"+k.String(), k.Style("btn", "outline"))
 	}
 
-	assert.Equal(t, Primary.String(), Color(1000).String())
+	assert.Equal(t, None.String(), Color(1000).String())
 	typ.SetString("other color")
-	assert.Equal(t, Primary, typ)
+	assert.Equal(t, None, typ)
 
 }

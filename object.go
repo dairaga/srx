@@ -20,6 +20,9 @@ type (
 
 		OK() bool
 
+		Append(children ...TObject)
+		Prepend(Children ...TObject)
+
 		// ID returns js attribute id.
 		ID() string
 		SetID(id string)
@@ -33,11 +36,12 @@ type (
 		Hide()
 		Show()
 
+		// TODO: apply Bootstrap utility on TObject.
+		TextColor() enum.Color
+		SetTextColor(c enum.Color)
+
 		Size() enum.Size
 		SetSize(s enum.Size)
-
-		Append(children ...TObject)
-		Prepend(Children ...TObject)
 
 		SetMargin(pos enum.Pos, size enum.Size)
 		RemoveMargin(pos enum.Pos, size enum.Size)
@@ -51,6 +55,7 @@ type (
 	Object struct {
 		*js.Element
 		size enum.Size
+		text enum.Color
 	}
 )
 
@@ -72,6 +77,20 @@ func (obj *Object) Size() enum.Size {
 
 func (obj *Object) SetSize(s enum.Size) {
 	obj.size = s
+}
+
+// -----------------------------------------------------------------------------
+
+func (obj *Object) TextColor() enum.Color {
+	return obj.text
+}
+
+// -----------------------------------------------------------------------------
+
+func (obj *Object) SetTextColor(c enum.Color) {
+	obj.Element.Remove(obj.text.TextColor())
+	obj.Element.Add(c.TextColor())
+	obj.text = c
 }
 
 // -----------------------------------------------------------------------------
@@ -120,6 +139,7 @@ func NewObject(el *js.Element) *Object {
 
 	return &Object{
 		Element: el,
+		text:    enum.None,
 	}
 }
 

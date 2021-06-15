@@ -7,7 +7,9 @@ import "strings"
 type Color int
 
 const (
-	Primary Color = iota
+	None Color = iota
+	Link
+	Primary
 	Secondary
 	Success
 	Info
@@ -15,12 +17,17 @@ const (
 	Danger
 	Light
 	Dark
-	Link
+	Block50
+	White50
+	Muted
+	Body
+	White
+	Transparent
 )
 
-const crName = `primarysecondarysuccessinfowarningdangerlightdarklink`
+const crName = `linkprimarysecondarysuccessinfowarningdangerlightdarkblack-50white-50mutedbodywhitetransparent`
 
-var crIndex = [...]uint{0, 7, 16, 23, 27, 34, 40, 45, 49, 53}
+var crIndex = [...]uint{0, 0, 4, 11, 20, 27, 31, 38, 44, 49, 53, 61, 69, 74, 78, 83, 94}
 
 // -----------------------------------------------------------------------------
 
@@ -28,7 +35,7 @@ func (i Color) String() string {
 	if int(i) >= 0 && int(i) < len(crIndex)-1 {
 		return crName[crIndex[i]:crIndex[i+1]]
 	}
-	return Primary.String()
+	return None.String()
 }
 
 // -----------------------------------------------------------------------------
@@ -46,5 +53,23 @@ func (i *Color) SetString(s string) {
 			return
 		}
 	}
-	*i = Primary
+	*i = None
+}
+
+// -----------------------------------------------------------------------------
+
+func (i Color) TextColor() string {
+	if i == None {
+		return Body.Style("text")
+	}
+	return i.Style("text")
+}
+
+// -----------------------------------------------------------------------------
+
+func (i Color) BackgroupColor() string {
+	if i == None {
+		return Transparent.BackgroupColor()
+	}
+	return i.Style("bg")
 }
