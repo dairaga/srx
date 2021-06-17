@@ -46,7 +46,6 @@ func TestBadge(t *testing.T) {
 		assert.True(t, b.(*badge).Contains(color.Style("bg")))
 		assert.False(t, b.(*badge).Contains(old.Style("bg")))
 		assert.True(t, b.(*badge).Contains("text-dark"))
-
 	}
 	old = b.Color()
 	b.SetColor(enum.Primary)

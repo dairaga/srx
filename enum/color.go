@@ -42,19 +42,19 @@ func (i Color) String() string {
 
 // -----------------------------------------------------------------------------
 
-func (i Color) isTextColor() bool {
+func (i Color) IsTextColor() bool {
 	return i >= Primary && i <= Muted
 }
 
 // -----------------------------------------------------------------------------
 
-func (i Color) isBGColor() bool {
+func (i Color) IsBGColor() bool {
 	return i >= Transparent && i <= White
 }
 
 // -----------------------------------------------------------------------------
 
-func (i Color) isTheme() bool {
+func (i Color) IsTheme() bool {
 	return i >= Primary && i <= Dark
 }
 
@@ -91,7 +91,7 @@ func (i *Color) SetString(s string) {
 // -----------------------------------------------------------------------------
 
 func (i Color) ApplyTextColor(obj ObjRef) (ret bool) {
-	if ret = i.isTextColor(); ret {
+	if ret = i.IsTextColor(); ret {
 		i.Apply(obj, "text")
 	}
 	return
@@ -100,7 +100,7 @@ func (i Color) ApplyTextColor(obj ObjRef) (ret bool) {
 // -----------------------------------------------------------------------------
 
 func (i Color) UnapplyTextColor(obj ObjRef) (ret bool) {
-	if ret = i.isTextColor(); ret {
+	if ret = i.IsTextColor(); ret {
 		i.Unapply(obj, "text")
 	}
 	return
@@ -109,7 +109,7 @@ func (i Color) UnapplyTextColor(obj ObjRef) (ret bool) {
 // -----------------------------------------------------------------------------
 
 func (i Color) ApplyBackground(obj ObjRef) (ret bool) {
-	if ret = i.isBGColor(); ret {
+	if ret = i.IsBGColor(); ret {
 		i.Apply(obj, "bg")
 	}
 	return
@@ -118,7 +118,7 @@ func (i Color) ApplyBackground(obj ObjRef) (ret bool) {
 // -----------------------------------------------------------------------------
 
 func (i Color) UnapplyBackground(obj ObjRef) (ret bool) {
-	if ret = i.isBGColor(); ret {
+	if ret = i.IsBGColor(); ret {
 		i.Unapply(obj, "bg")
 	}
 	return
@@ -127,7 +127,7 @@ func (i Color) UnapplyBackground(obj ObjRef) (ret bool) {
 // -----------------------------------------------------------------------------
 
 func (i Color) ApplyButton(obj ObjRef) (ret bool) {
-	if ret = (i.isTheme() || i == Link); ret {
+	if ret = (i.IsTheme() || i == Link); ret {
 		i.Apply(obj, "btn")
 	}
 	return
@@ -136,7 +136,7 @@ func (i Color) ApplyButton(obj ObjRef) (ret bool) {
 // -----------------------------------------------------------------------------
 
 func (i Color) UnapplyButton(obj ObjRef) (ret bool) {
-	if ret = (i.isTheme() || i == Link); ret {
+	if ret = (i.IsTheme() || i == Link); ret {
 		i.Unapply(obj, "btn")
 	}
 	return
@@ -145,7 +145,7 @@ func (i Color) UnapplyButton(obj ObjRef) (ret bool) {
 // -----------------------------------------------------------------------------
 
 func (i Color) ApplyOutlineButton(obj ObjRef) (ret bool) {
-	if ret = (i.isTheme() || i == Link); ret {
+	if ret = (i.IsTheme() || i == Link); ret {
 		i.Apply(obj, "btn", "outline")
 	}
 	return
@@ -154,7 +154,7 @@ func (i Color) ApplyOutlineButton(obj ObjRef) (ret bool) {
 // -----------------------------------------------------------------------------
 
 func (i Color) UnapplyOutlineButton(obj ObjRef) (ret bool) {
-	if ret = (i.isTheme() || i == Link); ret {
+	if ret = (i.IsTheme() || i == Link); ret {
 		i.Unapply(obj, "btn", "outline")
 	}
 	return

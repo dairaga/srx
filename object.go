@@ -39,6 +39,9 @@ type (
 		Color() enum.Color
 		SetColor(c enum.Color)
 
+		Background() enum.Color
+		SetBackground(c enum.Color)
+
 		Size() enum.Size
 		SetSize(s enum.Size)
 
@@ -53,8 +56,9 @@ type (
 
 	object struct {
 		*js.Element
-		size  enum.Size
-		color enum.Color
+		size    enum.Size
+		color   enum.Color
+		bgColor enum.Color
 	}
 )
 
@@ -77,6 +81,20 @@ func (obj *object) Color() enum.Color {
 func (obj *object) SetColor(c enum.Color) {
 	if c.ApplyTextColor(obj) {
 		obj.color = c
+	}
+}
+
+// -----------------------------------------------------------------------------
+
+func (obj *object) Background() enum.Color {
+	return obj.bgColor
+}
+
+// -----------------------------------------------------------------------------
+
+func (obj *object) SetBackground(c enum.Color) {
+	if c.ApplyBackground(obj) {
+		obj.bgColor = c
 	}
 }
 

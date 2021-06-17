@@ -14,9 +14,6 @@ type (
 		Type() enum.RoundType
 		SetType(t enum.RoundType)
 
-		Color() enum.Color
-		SetColor(color enum.Color)
-
 		Value() string
 		SetValue(v string)
 
@@ -28,8 +25,8 @@ type (
 		*component
 		caption TCaption
 		assist  TAssist
-		color   enum.Color
-		typ     enum.RoundType
+		//color   enum.Color
+		typ enum.RoundType
 	}
 )
 
@@ -75,25 +72,41 @@ func (b *badge) SetDescription(d string) {
 // -----------------------------------------------------------------------------
 
 func (b *badge) Color() enum.Color {
-	return b.color
+	return b.Background()
 }
 
 // -----------------------------------------------------------------------------
 
 func (b *badge) SetColor(c enum.Color) {
-	switch b.color {
+	b.SetBackground(c)
+}
+
+// -----------------------------------------------------------------------------
+
+func (b *badge) Background() enum.Color {
+	return b.bgColor
+}
+
+// -----------------------------------------------------------------------------
+
+func (b *badge) SetBackground(c enum.Color) {
+	if !c.IsTheme() {
+		return
+	}
+	switch b.bgColor {
 	case enum.Warning, enum.Info, enum.Light:
-		b.Element.Remove("text-dark", b.color.Style("bg"))
+		enum.Dark.UnapplyTextColor(b)
+		fallthrough
 	default:
-		b.Element.Remove(b.color.Style("bg"))
+		b.bgColor.UnapplyBackground(b)
 	}
 	switch c {
 	case enum.Warning, enum.Info, enum.Light:
-		b.Element.Add("text-dark", c.Style("bg"))
+		b.component.SetColor(enum.Dark)
+		fallthrough
 	default:
-		b.Element.Add(c.Style("bg"))
+		b.component.SetBackground(c)
 	}
-	b.color = c
 }
 
 // -----------------------------------------------------------------------------
@@ -101,16 +114,16 @@ func (b *badge) SetColor(c enum.Color) {
 func Badge(owner TComponent) TBadge {
 	caption := Caption()
 	assist := Assist()
-	el := js.From(`<span class="badge bg-secondary"></span>`)
+	el := js.From(`<span class="badge"></span>`)
 	b := &badge{
 		component: newComponent(owner, el),
 		caption:   caption,
 		assist:    assist,
-		color:     enum.Secondary,
 		typ:       enum.RoundNone,
 	}
 	b.Element.Append(caption)
 	b.Element.Append(assist)
+	b.SetColor(enum.Secondary)
 
 	if owner != nil {
 		owner.Add(b)
