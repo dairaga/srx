@@ -1,11 +1,10 @@
 // +build js,wasm
 
-package std
+package srx
 
 import (
 	"testing"
 
-	"github.com/dairaga/srx"
 	"github.com/dairaga/srx/enum"
 	"github.com/dairaga/srx/js"
 	"github.com/stretchr/testify/assert"
@@ -13,8 +12,8 @@ import (
 
 func TestButton(t *testing.T) {
 	caption := "TestButton"
-	btn := ButtonOf(srx.Root())
-	srx.Root().Append(btn)
+	btn := Button(Root())
+	Root().Append(btn)
 
 	/* Caption */
 	btn.SetCaption(caption)

@@ -1,25 +1,22 @@
 // build js,wasm
 
-package std
+package srx
 
 import (
-	"github.com/dairaga/srx"
-	"github.com/dairaga/srx/el"
 	"github.com/dairaga/srx/enum"
 	"github.com/dairaga/srx/js"
 )
 
 type (
 	TButton interface {
-		srx.TComponent
+		TComponent
 		Type() enum.ButtonType
 		SetType(typ enum.ButtonType)
 		SetCaption(c string)
 		Caption() string
 		Value() string
 		SetValue(v string)
-		Color() enum.Color
-		SetColor(c enum.Color)
+
 		Outline() bool
 		SetOutline(outline bool)
 
@@ -28,8 +25,8 @@ type (
 	}
 
 	button struct {
-		*srx.Component
-		caption el.TCaption
+		*component
+		caption TCaption
 		color   enum.Color
 		outline bool
 	}
@@ -77,33 +74,51 @@ func (btn *button) SetValue(v string) {
 
 // -----------------------------------------------------------------------------
 
-func (btn *button) Color() enum.Color {
-	return btn.color
-}
-
-// -----------------------------------------------------------------------------
-
 func (btn *button) setOutlineColor(outline bool, color enum.Color) {
+	handled := false
+	if outline {
+		handled = color.ApplyOutlineButton(btn)
+	} else {
+		handled = color.ApplyButton(btn)
+	}
+
+	if !handled {
+		return
+	}
+
 	if btn.outline {
 		btn.color.UnapplyOutlineButton(btn)
 	} else {
 		btn.color.UnapplyButton(btn)
 	}
 
-	if outline {
-		color.ApplyOutlineButton(btn)
-	} else {
-		color.ApplyButton(btn)
-	}
-
 	btn.outline = outline
 	btn.color = color
+	btn.bgColor = color
+}
+
+// -----------------------------------------------------------------------------
+
+func (btn *button) Color() enum.Color {
+	return btn.color
 }
 
 // -----------------------------------------------------------------------------
 
 func (btn *button) SetColor(c enum.Color) {
 	btn.setOutlineColor(btn.outline, c)
+}
+
+// -----------------------------------------------------------------------------
+
+func (btn *button) Background() enum.Color {
+	return btn.Color()
+}
+
+// -----------------------------------------------------------------------------
+
+func (btn *button) SetBackground(c enum.Color) {
+	btn.SetColor(c)
 }
 
 // -----------------------------------------------------------------------------
@@ -130,7 +145,7 @@ func (btn *button) SetSize(s enum.Size) {
 		}
 
 	}
-	btn.Object.SetSize(s)
+	btn.object.SetSize(s)
 }
 
 // -----------------------------------------------------------------------------
@@ -143,7 +158,7 @@ func (btn *button) Click() {
 
 func (btn *button) OnClick(fn func(TButton, js.TEvent)) {
 	cb := js.FuncOf(func(this js.Value, args []js.Value) interface{} {
-		sender := srx.Lookup(this).(TButton)
+		sender := Lookup(this).(TButton)
 		evt := js.EventOf(args[0])
 		fn(sender, evt)
 		return nil
@@ -153,13 +168,13 @@ func (btn *button) OnClick(fn func(TButton, js.TEvent)) {
 
 // -----------------------------------------------------------------------------
 
-func ButtonOf(owner srx.TComponent) TButton {
-	caption := el.Caption()
+func Button(owner TComponent) TButton {
+	caption := Caption()
 	el := js.From(js.HTML(`<button type="button" class="btn"></button>`))
 	el.Append(caption)
 
 	btn := &button{
-		Component: srx.NewComponent(owner, el),
+		component: newComponent(owner, el),
 		caption:   caption,
 		color:     enum.None,
 	}
