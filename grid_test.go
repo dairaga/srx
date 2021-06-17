@@ -1,12 +1,10 @@
 // +build js,wasm
 
-package std
+package srx
 
 import (
 	"testing"
 
-	"github.com/dairaga/srx"
-	"github.com/dairaga/srx/el"
 	"github.com/dairaga/srx/enum"
 	"github.com/dairaga/srx/js"
 	"github.com/stretchr/testify/assert"
@@ -14,11 +12,11 @@ import (
 
 func TestGrid(t *testing.T) {
 
-	g := GridPannelOf(srx.Root())
+	g := GridPanel(Root())
 	g.Ref().SetStyle("height", "100px")
-	g.AddCell(enum.N2, el.Caption("grid-span-2"))
-	g.AddCell(enum.N3, el.Caption("grid-span-3"))
-	g.AddCell(enum.N4, el.Caption("grid-span-4"))
+	g.AddCell(enum.N2, Caption("grid-span-2"))
+	g.AddCell(enum.N3, Caption("grid-span-3"))
+	g.AddCell(enum.N4, Caption("grid-span-4"))
 	js.Append(g)
 
 	/* init */

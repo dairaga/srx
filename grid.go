@@ -1,28 +1,26 @@
 // build js,wasm
 
-package std
+package srx
 
 import (
-	"github.com/dairaga/srx"
-	"github.com/dairaga/srx/el"
 	"github.com/dairaga/srx/enum"
 	"github.com/dairaga/srx/js"
 )
 
 type (
 	TGridPanel interface {
-		srx.TComponent
+		TComponent
 		AlignHorizontal(al enum.Align)
 		AlignVertical(al enum.Align)
-		AddCell(span enum.Size, children ...srx.TObject) el.TCell
-		el.TCeller
+		AddCell(span enum.Size, children ...TObject) TCell
+		TCeller
 	}
 
 	grid struct {
-		*srx.Component
+		*component
 		h     enum.Align
 		v     enum.Align
-		cells []el.TCell
+		cells []TCell
 	}
 )
 
@@ -55,8 +53,8 @@ func (g *grid) AlignVertical(al enum.Align) {
 
 // -----------------------------------------------------------------------------
 
-func (g *grid) AddCell(span enum.Size, children ...srx.TObject) el.TCell {
-	cell := el.Cell(children...)
+func (g *grid) AddCell(span enum.Size, children ...TObject) TCell {
+	cell := Cell(children...)
 	cell.Ref().Add(span.Col())
 	g.Element.Append(cell)
 	g.cells = append(g.cells, cell)
@@ -65,19 +63,19 @@ func (g *grid) AddCell(span enum.Size, children ...srx.TObject) el.TCell {
 
 // -----------------------------------------------------------------------------
 
-func (g *grid) Append(children ...srx.TObject) {
+func (g *grid) Append(children ...TObject) {
 	g.AddCell(enum.N0, children...)
 }
 
 // -----------------------------------------------------------------------------
 
-func (g *grid) Prepend(children ...srx.TObject) {
+func (g *grid) Prepend(children ...TObject) {
 	g.AddCell(enum.N0, children...)
 }
 
 // -----------------------------------------------------------------------------
 
-func (g *grid) Cell(index int) el.TCell {
+func (g *grid) Cell(index int) TCell {
 	if index >= 0 && index < len(g.cells) {
 		return g.cells[index]
 	}
@@ -86,7 +84,7 @@ func (g *grid) Cell(index int) el.TCell {
 
 // -----------------------------------------------------------------------------
 
-func (g *grid) Cells() []el.TCell {
+func (g *grid) Cells() []TCell {
 	return g.cells
 }
 
@@ -98,9 +96,9 @@ func (g *grid) CellLen() int {
 
 // -----------------------------------------------------------------------------
 
-func GridPannelOf(owner srx.TComponent) TGridPanel {
+func GridPanel(owner TComponent) TGridPanel {
 	ret := &grid{
-		Component: srx.NewComponent(owner, js.Create("div").Add("row")),
+		component: newComponent(owner, js.Create("div").Add("row")),
 		h:         enum.AlignNone,
 		v:         enum.AlignNone,
 	}
