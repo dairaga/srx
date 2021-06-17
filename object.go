@@ -16,7 +16,7 @@ type (
 	// It is a js html element with tattoo for seeking object.
 	TObject interface {
 		js.Wrapper
-		Ref() *js.Element
+		enum.ObjRef
 
 		OK() bool
 
@@ -36,9 +36,8 @@ type (
 		Hide()
 		Show()
 
-		// TODO: apply Bootstrap utility on TObject.
-		TextColor() enum.Color
-		SetTextColor(c enum.Color)
+		Color() enum.Color
+		SetColor(c enum.Color)
 
 		Size() enum.Size
 		SetSize(s enum.Size)
@@ -54,8 +53,8 @@ type (
 
 	Object struct {
 		*js.Element
-		size enum.Size
-		text enum.Color
+		size  enum.Size
+		color enum.Color
 	}
 )
 
@@ -69,6 +68,20 @@ func (obj *Object) Ref() *js.Element {
 
 // -----------------------------------------------------------------------------
 
+func (obj *Object) Color() enum.Color {
+	return obj.color
+}
+
+// -----------------------------------------------------------------------------
+
+func (obj *Object) SetColor(c enum.Color) {
+	if c.ApplyTextColor(obj) {
+		obj.color = c
+	}
+}
+
+// -----------------------------------------------------------------------------
+
 func (obj *Object) Size() enum.Size {
 	return obj.size
 }
@@ -77,20 +90,6 @@ func (obj *Object) Size() enum.Size {
 
 func (obj *Object) SetSize(s enum.Size) {
 	obj.size = s
-}
-
-// -----------------------------------------------------------------------------
-
-func (obj *Object) TextColor() enum.Color {
-	return obj.text
-}
-
-// -----------------------------------------------------------------------------
-
-func (obj *Object) SetTextColor(c enum.Color) {
-	obj.Element.Remove(obj.text.TextColor())
-	obj.Element.Add(c.TextColor())
-	obj.text = c
 }
 
 // -----------------------------------------------------------------------------
@@ -139,7 +138,7 @@ func NewObject(el *js.Element) *Object {
 
 	return &Object{
 		Element: el,
-		text:    enum.None,
+		color:   enum.None,
 	}
 }
 

@@ -23,7 +23,6 @@ func TestButton(t *testing.T) {
 
 	/* Button Type */
 	assert.Equal(t, enum.Button, btn.Type())
-
 	btn.SetType(enum.Submit)
 	assert.Equal(t, enum.Submit, btn.Type())
 
@@ -42,7 +41,11 @@ func TestButton(t *testing.T) {
 	assert.Equal(t, value, btn.Value())
 
 	/* Color */
-	color := enum.Primary
+	color := enum.None
+	assert.Equal(t, color, btn.Color())
+
+	color = enum.Primary
+	btn.SetColor(color)
 	assert.Equal(t, color, btn.Color())
 	assert.True(t, btn.(*button).Contains(color.Style("btn")))
 

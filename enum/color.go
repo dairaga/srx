@@ -2,13 +2,16 @@
 
 package enum
 
-import "strings"
+import (
+	"strings"
+)
 
 type Color int
 
 const (
 	None Color = iota
 	Link
+	Transparent
 	Primary
 	Secondary
 	Success
@@ -17,17 +20,16 @@ const (
 	Danger
 	Light
 	Dark
-	Block50
-	White50
-	Muted
 	Body
 	White
-	Transparent
+	Black50
+	White50
+	Muted
 )
 
-const crName = `linkprimarysecondarysuccessinfowarningdangerlightdarkblack-50white-50mutedbodywhitetransparent`
+const crName = `linktransparentprimarysecondarysuccessinfowarningdangerlightdarkbodywhiteblack-50white-50muted`
 
-var crIndex = [...]uint{0, 0, 4, 11, 20, 27, 31, 38, 44, 49, 53, 61, 69, 74, 78, 83, 94}
+var crIndex = [...]uint{0, 0, 4, 15, 22, 31, 38, 42, 49, 55, 60, 64, 68, 73, 81, 89, 94}
 
 // -----------------------------------------------------------------------------
 
@@ -40,8 +42,38 @@ func (i Color) String() string {
 
 // -----------------------------------------------------------------------------
 
+func (i Color) isTextColor() bool {
+	return i >= Primary && i <= Muted
+}
+
+// -----------------------------------------------------------------------------
+
+func (i Color) isBGColor() bool {
+	return i >= Transparent && i <= White
+}
+
+// -----------------------------------------------------------------------------
+
+func (i Color) isTheme() bool {
+	return i >= Primary && i <= Dark
+}
+
+// -----------------------------------------------------------------------------
+
 func (i Color) Style(s ...string) string {
 	return strings.Join(append(s, i.String()), "-")
+}
+
+// -----------------------------------------------------------------------------
+
+func (i Color) Apply(obj ObjRef, s ...string) {
+	obj.Ref().Add(i.Style(s...))
+}
+
+// -----------------------------------------------------------------------------
+
+func (i Color) Unapply(obj ObjRef, s ...string) {
+	obj.Ref().Remove(i.Style(s...))
 }
 
 // -----------------------------------------------------------------------------
@@ -58,18 +90,72 @@ func (i *Color) SetString(s string) {
 
 // -----------------------------------------------------------------------------
 
-func (i Color) TextColor() string {
-	if i == None {
-		return Body.Style("text")
+func (i Color) ApplyTextColor(obj ObjRef) (ret bool) {
+	if ret = i.isTextColor(); ret {
+		i.Apply(obj, "text")
 	}
-	return i.Style("text")
+	return
 }
 
 // -----------------------------------------------------------------------------
 
-func (i Color) BackgroupColor() string {
-	if i == None {
-		return Transparent.BackgroupColor()
+func (i Color) UnapplyTextColor(obj ObjRef) (ret bool) {
+	if ret = i.isTextColor(); ret {
+		i.Unapply(obj, "text")
 	}
-	return i.Style("bg")
+	return
+}
+
+// -----------------------------------------------------------------------------
+
+func (i Color) ApplyBackground(obj ObjRef) (ret bool) {
+	if ret = i.isBGColor(); ret {
+		i.Apply(obj, "bg")
+	}
+	return
+}
+
+// -----------------------------------------------------------------------------
+
+func (i Color) UnapplyBackground(obj ObjRef) (ret bool) {
+	if ret = i.isBGColor(); ret {
+		i.Unapply(obj, "bg")
+	}
+	return
+}
+
+// -----------------------------------------------------------------------------
+
+func (i Color) ApplyButton(obj ObjRef) (ret bool) {
+	if ret = (i.isTheme() || i == Link); ret {
+		i.Apply(obj, "btn")
+	}
+	return
+}
+
+// -----------------------------------------------------------------------------
+
+func (i Color) UnapplyButton(obj ObjRef) (ret bool) {
+	if ret = (i.isTheme() || i == Link); ret {
+		i.Unapply(obj, "btn")
+	}
+	return
+}
+
+// -----------------------------------------------------------------------------
+
+func (i Color) ApplyOutlineButton(obj ObjRef) (ret bool) {
+	if ret = (i.isTheme() || i == Link); ret {
+		i.Apply(obj, "btn", "outline")
+	}
+	return
+}
+
+// -----------------------------------------------------------------------------
+
+func (i Color) UnapplyOutlineButton(obj ObjRef) (ret bool) {
+	if ret = (i.isTheme() || i == Link); ret {
+		i.Unapply(obj, "btn", "outline")
+	}
+	return
 }

@@ -30,7 +30,7 @@ type (
 	button struct {
 		*srx.Component
 		caption el.TCaption
-		color   enum.Color
+		//color   enum.Color
 		outline bool
 	}
 )
@@ -84,16 +84,18 @@ func (btn *button) Color() enum.Color {
 // -----------------------------------------------------------------------------
 
 func (btn *button) setOutlineColor(outline bool, color enum.Color) {
-	old := btn.color.Style("btn")
 	if btn.outline {
-		old = btn.color.Style("btn", "outline")
+		btn.color.UnapplyOutlineButton(btn)
+	} else {
+		btn.color.UnapplyButton(btn)
 	}
 
-	new := color.Style("btn")
 	if outline {
-		new = color.Style("btn", "outline")
+		color.ApplyOutlineButton(btn)
+	} else {
+		color.ApplyButton(btn)
 	}
-	btn.Replace(old, new)
+
 	btn.outline = outline
 	btn.color = color
 }
@@ -153,13 +155,13 @@ func (btn *button) OnClick(fn func(TButton, js.TEvent)) {
 
 func ButtonOf(owner srx.TComponent) TButton {
 	caption := el.Caption()
-	el := js.From(js.HTML(`<button type="button" class="btn btn-primary"></button>`))
+	el := js.From(js.HTML(`<button type="button" class="btn"></button>`))
 	el.Append(caption)
 
 	btn := &button{
 		Component: srx.NewComponent(owner, el),
 		caption:   caption,
-		color:     enum.Primary,
+		color:     enum.None,
 	}
 
 	if owner != nil {

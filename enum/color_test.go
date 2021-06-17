@@ -11,15 +11,22 @@ import (
 func TestColor(t *testing.T) {
 
 	data := map[Color]string{
-		Primary:   "primary",
-		Secondary: "secondary",
-		Success:   "success",
-		Info:      "info",
-		Warning:   "warning",
-		Danger:    "danger",
-		Light:     "light",
-		Dark:      "dark",
-		Link:      "link",
+		None:        "",
+		Link:        "link",
+		Transparent: "transparent",
+		Primary:     "primary",
+		Secondary:   "secondary",
+		Success:     "success",
+		Info:        "info",
+		Warning:     "warning",
+		Danger:      "danger",
+		Light:       "light",
+		Dark:        "dark",
+		Body:        "body",
+		White:       "white",
+		Black50:     "black-50",
+		White50:     "white-50",
+		Muted:       "muted",
 	}
 
 	var typ Color
