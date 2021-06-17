@@ -1,33 +1,27 @@
 // +build js,wasm
 
-package std
+package srx
 
 import (
-	"github.com/dairaga/srx"
-	"github.com/dairaga/srx/el"
 	"github.com/dairaga/srx/enum"
 	"github.com/dairaga/srx/js"
 )
 
 type (
 	TSpinner interface {
-		srx.TComponent
+		TComponent
 
 		Type() enum.SpinnerType
 		SetType(t enum.SpinnerType)
-
-		Color() enum.Color
-		SetColor(color enum.Color)
 
 		Description() string
 		SetDescription(desc string)
 	}
 
 	spinner struct {
-		*srx.Component
-		assist el.TAssist
+		*component
+		assist TAssist
 		typ    enum.SpinnerType
-		color  enum.Color
 	}
 )
 
@@ -48,19 +42,6 @@ func (s *spinner) SetType(t enum.SpinnerType) {
 
 // -----------------------------------------------------------------------------
 
-func (s *spinner) Color() enum.Color {
-	return s.color
-}
-
-// -----------------------------------------------------------------------------
-
-func (s *spinner) SetColor(c enum.Color) {
-	s.Element.Replace(s.color.Style("text"), c.Style("text"))
-	s.color = c
-}
-
-// -----------------------------------------------------------------------------
-
 func (s *spinner) Description() string {
 	return s.assist.Description()
 }
@@ -73,16 +54,19 @@ func (s *spinner) SetDescription(d string) {
 
 // -----------------------------------------------------------------------------
 
-func SpinnerOf(owner srx.TComponent) TSpinner {
-	assist := el.Assist()
-	el := js.From(`<div class="spinner-border text-dark" role="status"></div>`)
+func Spinner(owner TComponent) TSpinner {
+	assist := Assist()
+	el := js.From(`<div class="text-dark spinner-border" role="status"></div>`)
 	ret := &spinner{
-		Component: srx.NewComponent(owner, el),
+		component: newComponent(owner, el),
 		assist:    assist,
-		color:     enum.Dark,
-		typ:       enum.SpinnerBorder,
 	}
 	ret.Element.Append(assist)
+	ret.color = enum.Dark
+	ret.typ = enum.SpinnerBorder
+	//ret.SetColor(enum.Dark)
+	//ret.SetType(enum.SpinnerBorder)
+
 	if owner != nil {
 		owner.Add(ret)
 	}

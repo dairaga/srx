@@ -79,6 +79,7 @@ func (obj *object) Color() enum.Color {
 // -----------------------------------------------------------------------------
 
 func (obj *object) SetColor(c enum.Color) {
+	obj.color.UnapplyTextColor(obj)
 	if c.ApplyTextColor(obj) {
 		obj.color = c
 	}
@@ -93,6 +94,7 @@ func (obj *object) Background() enum.Color {
 // -----------------------------------------------------------------------------
 
 func (obj *object) SetBackground(c enum.Color) {
+	obj.color.UnapplyBackground(obj)
 	if c.ApplyBackground(obj) {
 		obj.bgColor = c
 	}

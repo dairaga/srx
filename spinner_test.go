@@ -1,11 +1,10 @@
 // +build js,wasm
 
-package std
+package srx
 
 import (
 	"testing"
 
-	"github.com/dairaga/srx"
 	"github.com/dairaga/srx/enum"
 	"github.com/dairaga/srx/js"
 	"github.com/stretchr/testify/assert"
@@ -16,7 +15,7 @@ func TestSpinner(t *testing.T) {
 	color := enum.Dark
 	typ := enum.SpinnerBorder
 
-	s := SpinnerOf(srx.Root())
+	s := Spinner(Root())
 	js.Append(s)
 
 	/* init */
