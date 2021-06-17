@@ -11,7 +11,7 @@ import (
 
 func TestMemory(t *testing.T) {
 
-	testCom := ComponentOf(Root(), js.From(js.HTML(`<div>TestMemory</div>`)))
+	testCom := Component(Root(), js.From(js.HTML(`<div>TestMemory</div>`)))
 	Root().Add(testCom)
 
 	com := mem.lookup(testCom)

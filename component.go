@@ -17,30 +17,30 @@ type (
 		Release()
 	}
 
-	Component struct {
-		*Object
+	component struct {
+		*object
 		owner    TComponent
 		children map[string]TComponent
 	}
 )
 
-var _ TComponent = &Component{}
+var _ TComponent = &component{}
 
 // -----------------------------------------------------------------------------
 
-func (com *Component) Tattoo() string {
+func (com *component) Tattoo() string {
 	return com.Attr(srxTattoo)
 }
 
 // -----------------------------------------------------------------------------
 
-func (com *Component) Owner() TComponent {
+func (com *component) Owner() TComponent {
 	return com.owner
 }
 
 // -----------------------------------------------------------------------------
 
-func (com *Component) Add(child TComponent) {
+func (com *component) Add(child TComponent) {
 	if child != nil && child.OK() {
 		t := child.Tattoo()
 		old, ok := com.children[t]
@@ -54,13 +54,13 @@ func (com *Component) Add(child TComponent) {
 
 // -----------------------------------------------------------------------------
 
-func (com *Component) Remove(child TComponent) {
+func (com *component) Remove(child TComponent) {
 	delete(com.children, child.Tattoo())
 }
 
 // -----------------------------------------------------------------------------
 
-func (com *Component) Release() {
+func (com *component) Release() {
 	for _, v := range com.children {
 		v.Release()
 	}
@@ -69,15 +69,15 @@ func (com *Component) Release() {
 		com.owner.Remove(com)
 	}
 	mem.free(com)
-	com.Object.Release()
+	com.object.Release()
 }
 
 // -----------------------------------------------------------------------------
 
-func NewComponent(owner TComponent, el *js.Element) *Component {
+func newComponent(owner TComponent, el *js.Element) *component {
 	el.SetAttr(srxTattoo, tattoo())
-	return &Component{
-		Object:   NewObject(el),
+	return &component{
+		object:   newObject(el),
 		owner:    owner,
 		children: make(map[string]TComponent),
 	}
@@ -85,6 +85,6 @@ func NewComponent(owner TComponent, el *js.Element) *Component {
 
 // -----------------------------------------------------------------------------
 
-func ComponentOf(owner TComponent, el *js.Element) TComponent {
-	return NewComponent(owner, el)
+func Component(owner TComponent, el *js.Element) TComponent {
+	return newComponent(owner, el)
 }

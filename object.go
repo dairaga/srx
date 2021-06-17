@@ -51,30 +51,30 @@ type (
 		Release()
 	}
 
-	Object struct {
+	object struct {
 		*js.Element
 		size  enum.Size
 		color enum.Color
 	}
 )
 
-var _ TObject = &Object{}
+var _ TObject = &object{}
 
 // -----------------------------------------------------------------------------
 
-func (obj *Object) Ref() *js.Element {
+func (obj *object) Ref() *js.Element {
 	return obj.Element
 }
 
 // -----------------------------------------------------------------------------
 
-func (obj *Object) Color() enum.Color {
+func (obj *object) Color() enum.Color {
 	return obj.color
 }
 
 // -----------------------------------------------------------------------------
 
-func (obj *Object) SetColor(c enum.Color) {
+func (obj *object) SetColor(c enum.Color) {
 	if c.ApplyTextColor(obj) {
 		obj.color = c
 	}
@@ -82,19 +82,19 @@ func (obj *Object) SetColor(c enum.Color) {
 
 // -----------------------------------------------------------------------------
 
-func (obj *Object) Size() enum.Size {
+func (obj *object) Size() enum.Size {
 	return obj.size
 }
 
 // -----------------------------------------------------------------------------
 
-func (obj *Object) SetSize(s enum.Size) {
+func (obj *object) SetSize(s enum.Size) {
 	obj.size = s
 }
 
 // -----------------------------------------------------------------------------
 
-func (obj *Object) Append(children ...TObject) {
+func (obj *object) Append(children ...TObject) {
 	for i := range children {
 		obj.Element.Append(children[i])
 	}
@@ -102,7 +102,7 @@ func (obj *Object) Append(children ...TObject) {
 
 // -----------------------------------------------------------------------------
 
-func (obj *Object) Prepend(children ...TObject) {
+func (obj *object) Prepend(children ...TObject) {
 	for i := range children {
 		obj.Element.Prepend(children[i])
 	}
@@ -110,33 +110,33 @@ func (obj *Object) Prepend(children ...TObject) {
 
 // -----------------------------------------------------------------------------
 
-func (obj *Object) SetMargin(pos enum.Pos, size enum.Size) {
+func (obj *object) SetMargin(pos enum.Pos, size enum.Size) {
 	obj.Element.Add(pos.Margin(size))
 }
 
 // -----------------------------------------------------------------------------
 
-func (obj *Object) RemoveMargin(pos enum.Pos, size enum.Size) {
+func (obj *object) RemoveMargin(pos enum.Pos, size enum.Size) {
 	obj.Element.Remove(pos.Margin(size))
 }
 
 // -----------------------------------------------------------------------------
 
-func (obj *Object) SetPadding(pos enum.Pos, size enum.Size) {
+func (obj *object) SetPadding(pos enum.Pos, size enum.Size) {
 	obj.Element.Add(pos.Padding(size))
 }
 
 // -----------------------------------------------------------------------------
 
-func (obj *Object) RemovePadding(pos enum.Pos, size enum.Size) {
+func (obj *object) RemovePadding(pos enum.Pos, size enum.Size) {
 	obj.Element.Remove(pos.Padding(size))
 }
 
 // -----------------------------------------------------------------------------
 
-func NewObject(el *js.Element) *Object {
+func newObject(el *js.Element) *object {
 
-	return &Object{
+	return &object{
 		Element: el,
 		color:   enum.None,
 	}
@@ -144,6 +144,6 @@ func NewObject(el *js.Element) *Object {
 
 // -----------------------------------------------------------------------------
 
-func ObjectOf(el *js.Element) TObject {
-	return NewObject(el)
+func Object(el *js.Element) TObject {
+	return newObject(el)
 }
