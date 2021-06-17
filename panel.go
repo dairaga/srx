@@ -1,19 +1,18 @@
 // +build js,wasm
 
-package std
+package srx
 
 import (
-	"github.com/dairaga/srx"
 	"github.com/dairaga/srx/js"
 )
 
 type (
 	TPanel interface {
-		srx.TComponent
+		TComponent
 	}
 
 	panel struct {
-		*srx.Component
+		*component
 	}
 )
 
@@ -21,9 +20,9 @@ var _ TPanel = &panel{}
 
 // -----------------------------------------------------------------------------
 
-func PanelOf(owner srx.TComponent) TPanel {
+func PanelOf(owner TComponent) TPanel {
 	ret := &panel{
-		Component: srx.NewComponent(owner, js.Create("div")),
+		component: newComponent(owner, js.Create("div")),
 	}
 	if owner != nil {
 		owner.Add(ret)
