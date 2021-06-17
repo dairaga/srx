@@ -30,7 +30,7 @@ type (
 	button struct {
 		*srx.Component
 		caption el.TCaption
-		//color   enum.Color
+		color   enum.Color
 		outline bool
 	}
 )
