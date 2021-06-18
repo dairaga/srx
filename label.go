@@ -1,15 +1,14 @@
 // +build js,wasm
 
-package form
+package srx
 
 import (
-	"github.com/dairaga/srx"
 	"github.com/dairaga/srx/js"
 )
 
 type (
 	TLabel interface {
-		srx.TComponent
+		TComponent
 		For() string
 		SetFor(f string)
 
@@ -21,7 +20,7 @@ type (
 	}
 
 	label struct {
-		*srx.Component
+		*component
 	}
 )
 
@@ -70,10 +69,10 @@ func (lb *label) SetHorizontal(h bool) {
 
 // -----------------------------------------------------------------------------
 
-func newLabel(owner srx.TComponent, class string) *label {
+func newLabel(owner TComponent, class string) *label {
 	el := js.Create("label").Add(class)
 	ret := &label{
-		Component: srx.NewComponent(owner, el),
+		component: newComponent(owner, el),
 	}
 	if owner != nil {
 		owner.Add(ret)
@@ -83,6 +82,6 @@ func newLabel(owner srx.TComponent, class string) *label {
 
 // -----------------------------------------------------------------------------
 
-func LabelOf(owner srx.TComponent) TLabel {
+func Label(owner TComponent) TLabel {
 	return newLabel(owner, `form-label`)
 }

@@ -1,11 +1,10 @@
 // +build js,wasm
 
-package form
+package srx
 
 import (
 	"testing"
 
-	"github.com/dairaga/srx"
 	"github.com/dairaga/srx/js"
 	"github.com/stretchr/testify/assert"
 )
@@ -14,7 +13,7 @@ func TestLabel(t *testing.T) {
 	f := ""
 	caption := ""
 
-	lb := LabelOf(srx.Root())
+	lb := Label(Root())
 	js.Append(lb)
 
 	/* init */
