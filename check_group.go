@@ -53,19 +53,13 @@ var _ TCheck = &check{}
 var _ TBaseCheckGroup = &basecheckgroup{}
 var _ TCheckGroup = &checkgroup{}
 
-// -----------------------------------------------------------------------------
-
 func (c *check) Checked() bool {
 	return c.Prop("checked").Bool()
 }
 
-// -----------------------------------------------------------------------------
-
 func (c *check) SetCheck(checked bool) {
 	c.SetProp("checked", checked)
 }
-
-// -----------------------------------------------------------------------------
 
 func newCheckControl(owner TComponent, tagName string) *check {
 	input := newFormControl(owner, "input", "form-check-input")
@@ -76,19 +70,13 @@ func newCheckControl(owner TComponent, tagName string) *check {
 	return ret
 }
 
-// -----------------------------------------------------------------------------
-
 func newCheck(owner TComponent) *check {
 	return newCheckControl(owner, "checkbox")
 }
 
-// -----------------------------------------------------------------------------
-
 func CheckOf(owner TComponent) TCheck {
 	return newCheck(owner)
 }
-
-// -----------------------------------------------------------------------------
 
 //func newRadio(owner TComponent) *check {
 //	input := newFormControl(owner, "input", "form-check-input")
@@ -99,43 +87,29 @@ func CheckOf(owner TComponent) TCheck {
 //	return ret
 //}
 
-// -----------------------------------------------------------------------------
-
 //func RadioOf(owner TComponent) TRadio {
 //	return newRadio(owner)
 //}
-
-// -----------------------------------------------------------------------------
 
 func (g *basecheckgroup) Name() string {
 	return g.name
 }
 
-// -----------------------------------------------------------------------------
-
 func (g *basecheckgroup) SetName(name string) {
 	g.name = name
 }
-
-// -----------------------------------------------------------------------------
 
 func (g *basecheckgroup) Inline() bool {
 	return g.inline
 }
 
-// -----------------------------------------------------------------------------
-
 func (g *basecheckgroup) SetInline(inline bool) {
 	g.inline = inline
 }
 
-// -----------------------------------------------------------------------------
-
 func (g *basecheckgroup) Children() []TCheck {
 	return g.children
 }
-
-// -----------------------------------------------------------------------------
 
 func (g *basecheckgroup) Child(index int) TCheck {
 	if index >= 0 && index < len(g.children) {
@@ -144,13 +118,9 @@ func (g *basecheckgroup) Child(index int) TCheck {
 	return nil
 }
 
-// -----------------------------------------------------------------------------
-
 func (g *basecheckgroup) ChildLen() int {
 	return len(g.children)
 }
-
-// -----------------------------------------------------------------------------
 
 func (g *checkgroup) Value() []string {
 	values := []string{}
@@ -163,8 +133,6 @@ func (g *checkgroup) Value() []string {
 	)
 	return values
 }
-
-// -----------------------------------------------------------------------------
 
 func (g *checkgroup) SetValue(values ...string) {
 	size := len(values)
@@ -188,8 +156,6 @@ func (g *checkgroup) SetValue(values ...string) {
 	)
 }
 
-// -----------------------------------------------------------------------------
-
 func (g *checkgroup) AddCheck(value, caption string, checked bool) (TCheck, TLabel) {
 	div := js.Create("div").Add("form-check")
 	if g.inline {
@@ -210,8 +176,6 @@ func (g *checkgroup) AddCheck(value, caption string, checked bool) (TCheck, TLab
 	g.Element.Append(div)
 	return check, lb
 }
-
-// -----------------------------------------------------------------------------
 
 func CheckGroup(owner TComponent) TCheckGroup {
 	g := &checkgroup{

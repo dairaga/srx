@@ -18,8 +18,6 @@ type (
 
 var _ TPanel = &panel{}
 
-// -----------------------------------------------------------------------------
-
 func Panel(owner TComponent) TPanel {
 	ret := &panel{
 		component: newComponent(owner, js.Create("div")),

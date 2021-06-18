@@ -27,49 +27,33 @@ type (
 
 var _ TBadge = &badge{}
 
-// -----------------------------------------------------------------------------
-
 func (b *badge) Value() string {
 	return b.caption.Caption()
 }
-
-// -----------------------------------------------------------------------------
 
 func (b *badge) SetValue(v string) {
 	b.caption.SetCaption(v)
 }
 
-// -----------------------------------------------------------------------------
-
 func (b *badge) Description() string {
 	return b.assist.Description()
 }
-
-// -----------------------------------------------------------------------------
 
 func (b *badge) SetDescription(d string) {
 	b.assist.SetDescription(d)
 }
 
-// -----------------------------------------------------------------------------
-
 func (b *badge) Color() enum.Color {
 	return b.Background()
 }
-
-// -----------------------------------------------------------------------------
 
 func (b *badge) SetColor(c enum.Color) {
 	b.SetBackground(c)
 }
 
-// -----------------------------------------------------------------------------
-
 func (b *badge) Background() enum.Color {
 	return b.bgColor
 }
-
-// -----------------------------------------------------------------------------
 
 func (b *badge) SetBackground(c enum.Color) {
 	if !c.IsTheme() {
@@ -84,8 +68,6 @@ func (b *badge) SetBackground(c enum.Color) {
 	}
 	b.component.SetBackground(c)
 }
-
-// -----------------------------------------------------------------------------
 
 func Badge(owner TComponent) TBadge {
 	caption := Caption()

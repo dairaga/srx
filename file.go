@@ -8,8 +8,6 @@ type (
 	}
 )
 
-// -----------------------------------------------------------------------------
-
 func File(owner TComponent) TFile {
 	input := newInput(owner)
 	input.SetType("file")

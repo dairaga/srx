@@ -20,8 +20,6 @@ const alName = `startendcenterbetweenaroundevenlybaselinestretch`
 
 var alIndex = [...]uint8{0, 0, 5, 8, 14, 21, 27, 33, 41, 48}
 
-// -----------------------------------------------------------------------------
-
 func (i Align) String() string {
 	if int(i) >= 0 && int(i) < len(alIndex)-1 {
 		return alName[alIndex[i]:alIndex[i+1]]
@@ -29,13 +27,9 @@ func (i Align) String() string {
 	return ""
 }
 
-// -----------------------------------------------------------------------------
-
 func (i Align) IsHorizontal() bool {
 	return i >= AlignStart && i <= AlignEvenly
 }
-
-// -----------------------------------------------------------------------------
 
 func (i Align) Horizontal() string {
 	if i.IsHorizontal() {
@@ -44,14 +38,10 @@ func (i Align) Horizontal() string {
 	return ""
 }
 
-// -----------------------------------------------------------------------------
-
 func (i Align) IsVertical() bool {
 	return (i >= AlignStart && i <= AlignCenter) ||
 		(i >= AlignBaseline && i <= AlignStretch)
 }
-
-// -----------------------------------------------------------------------------
 
 func (i Align) Vertical() string {
 	if i.IsVertical() {
@@ -60,16 +50,12 @@ func (i Align) Vertical() string {
 	return ""
 }
 
-// -----------------------------------------------------------------------------
-
 func (i Align) ApplyHorizontal(obj ObjRef) (ret bool) {
 	if ret = i.IsHorizontal(); ret {
 		obj.Ref().Add(i.Horizontal())
 	}
 	return
 }
-
-// -----------------------------------------------------------------------------
 
 func (i Align) UnapplyHorizontal(obj ObjRef) (ret bool) {
 	if ret = i.IsHorizontal(); ret {
@@ -78,16 +64,12 @@ func (i Align) UnapplyHorizontal(obj ObjRef) (ret bool) {
 	return
 }
 
-// -----------------------------------------------------------------------------
-
 func (i Align) ApplyVertical(obj ObjRef) (ret bool) {
 	if ret = i.IsVertical(); ret {
 		obj.Ref().Add(i.Vertical())
 	}
 	return
 }
-
-// -----------------------------------------------------------------------------
 
 func (i Align) UnapplyVertical(obj ObjRef) (ret bool) {
 	if ret = i.IsVertical(); ret {

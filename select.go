@@ -20,8 +20,6 @@ type (
 
 var _ TSelect = &sel{}
 
-// -----------------------------------------------------------------------------
-
 func (s *sel) AddOption(caption, value string) {
 	//s.opts = append(s.opts, [2]string{value, caption})
 	opt := js.Create("option")
@@ -29,8 +27,6 @@ func (s *sel) AddOption(caption, value string) {
 	opt.SetText(caption)
 	s.Element.Append(opt)
 }
-
-// -----------------------------------------------------------------------------
 
 func Select(owner TComponent) TSelect {
 	return &sel{

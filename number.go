@@ -4,8 +4,6 @@ package srx
 
 type TNumber = TRange
 
-// -----------------------------------------------------------------------------
-
 func Number(owner TComponent) TNumber {
 	ret := &rangeInput{
 		input: newInput(owner),

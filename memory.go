@@ -18,23 +18,17 @@ var mem = &memory{
 	table: make(map[string]TComponent),
 }
 
-// -----------------------------------------------------------------------------
-
 func (m *memory) alloc(com TComponent) {
 	defer m.mux.Unlock()
 	m.mux.Lock()
 	m.table[com.Tattoo()] = com
 }
 
-// -----------------------------------------------------------------------------
-
 func (m *memory) free(com TComponent) {
 	defer m.mux.Unlock()
 	m.mux.Lock()
 	delete(m.table, com.Tattoo())
 }
-
-// -----------------------------------------------------------------------------
 
 func (m *memory) lookup(v js.Wrapper) TComponent {
 	if tattoo := v.JSValue().Call("getAttribute", srxTattoo); tattoo.Truthy() {
@@ -43,8 +37,6 @@ func (m *memory) lookup(v js.Wrapper) TComponent {
 
 	return nil
 }
-
-// -----------------------------------------------------------------------------
 
 func Lookup(v js.Wrapper) TComponent {
 	return mem.lookup(v)

@@ -21,38 +21,26 @@ type (
 
 var _ TTextarea = &textarea{}
 
-// -----------------------------------------------------------------------------
-
 func (t *textarea) Name() string {
 	return t.Attr("name")
 }
-
-// -----------------------------------------------------------------------------
 
 func (t *textarea) SetName(n string) {
 	t.SetAttr("name", n)
 
 }
 
-// -----------------------------------------------------------------------------
-
 func (t *textarea) Value() string {
 	return t.Prop("value").String()
 }
-
-// -----------------------------------------------------------------------------
 
 func (t *textarea) SetValue(v string) {
 	t.SetProp("value", v)
 }
 
-// -----------------------------------------------------------------------------
-
 func (t *textarea) ReadOnly() bool {
 	return t.HasAttr("readonly")
 }
-
-// -----------------------------------------------------------------------------
 
 func (t *textarea) SetReadOnly(only bool) {
 	if only {
@@ -62,13 +50,9 @@ func (t *textarea) SetReadOnly(only bool) {
 	}
 }
 
-// -----------------------------------------------------------------------------
-
 func (t *textarea) Required() bool {
 	return t.HasAttr("required")
 }
-
-// -----------------------------------------------------------------------------
 
 func (t *textarea) SetRequired(required bool) {
 	if required {
@@ -78,19 +62,13 @@ func (t *textarea) SetRequired(required bool) {
 	}
 }
 
-// -----------------------------------------------------------------------------
-
 func (t *textarea) SetPlaceholder(h string) {
 	t.SetAttr("placeholder", h)
 }
 
-// -----------------------------------------------------------------------------
-
 func (t *textarea) SetRows(rows int) {
 	t.SetAttr("rows", strconv.Itoa(rows))
 }
-
-// -----------------------------------------------------------------------------
 
 func Textarea(owner TComponent) TTextarea {
 	el := js.Create("textarea").Add("form-control").SetAttr("rows", "3")

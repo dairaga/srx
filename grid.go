@@ -26,8 +26,6 @@ type (
 
 var _ TGridPanel = &grid{}
 
-// -----------------------------------------------------------------------------
-
 //func (g *grid) AlignHorizontal(al enum.Align) {
 //	if h := g.h.Horizontal(); h != "" {
 //		g.Element.Remove(h)
@@ -39,7 +37,7 @@ var _ TGridPanel = &grid{}
 //	g.h = al
 //}
 //
-//// -----------------------------------------------------------------------------
+//
 //
 //func (g *grid) AlignVertical(al enum.Align) {
 //	if v := g.v.Vertical(); v != "" {
@@ -51,8 +49,6 @@ var _ TGridPanel = &grid{}
 //	g.v = al
 //}
 
-// -----------------------------------------------------------------------------
-
 func (g *grid) AddCell(span enum.Size, children ...TObject) TCell {
 	cell := Cell(children...)
 	cell.Ref().Add(span.Col())
@@ -61,19 +57,13 @@ func (g *grid) AddCell(span enum.Size, children ...TObject) TCell {
 	return cell
 }
 
-// -----------------------------------------------------------------------------
-
 func (g *grid) Append(children ...TObject) {
 	g.AddCell(enum.N0, children...)
 }
 
-// -----------------------------------------------------------------------------
-
 func (g *grid) Prepend(children ...TObject) {
 	g.AddCell(enum.N0, children...)
 }
-
-// -----------------------------------------------------------------------------
 
 func (g *grid) Cell(index int) TCell {
 	if index >= 0 && index < len(g.cells) {
@@ -82,19 +72,13 @@ func (g *grid) Cell(index int) TCell {
 	return nil
 }
 
-// -----------------------------------------------------------------------------
-
 func (g *grid) Cells() []TCell {
 	return g.cells
 }
 
-// -----------------------------------------------------------------------------
-
 func (g *grid) CellLen() int {
 	return len(g.cells)
 }
-
-// -----------------------------------------------------------------------------
 
 func GridPanel(owner TComponent) TGridPanel {
 	ret := &grid{

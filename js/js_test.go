@@ -17,8 +17,6 @@ func query(selector string) gojs.Value {
 	return gojs.Global().Get("document").Call("querySelector", selector)
 }
 
-// -----------------------------------------------------------------------------
-
 func TestMain(m *testing.M) {
 	headless := os.Getenv("WASM_HEADLESS")
 	exitVal := m.Run()
@@ -33,15 +31,11 @@ func TestMain(m *testing.M) {
 	os.Exit(exitVal)
 }
 
-// -----------------------------------------------------------------------------
-
 func TestCreate(t *testing.T) {
 	div := js.Create("div")
 	div.SetText("abc")
 	assert.Equal(t, "abc", div.Text())
 }
-
-// -----------------------------------------------------------------------------
 
 func TestAppend(t *testing.T) {
 	div := js.Create("div")
@@ -52,14 +46,10 @@ func TestAppend(t *testing.T) {
 	assert.Equal(t, "test_append", test.Call("getAttribute", "id").String())
 }
 
-// -----------------------------------------------------------------------------
-
 func TestIsJSObject(t *testing.T) {
 	assert.False(t, js.IsJSObject(js.ValueOf(true)))
 	assert.True(t, js.IsJSObject(js.Create("div")))
 }
-
-// -----------------------------------------------------------------------------
 
 func TestIsJSFunc(t *testing.T) {
 	assert.False(t, js.IsJSFunc(js.ValueOf(true)))

@@ -8,8 +8,6 @@ type (
 	}
 )
 
-// -----------------------------------------------------------------------------
-
 func Email(owner TComponent) TEmail {
 	input := newInput(owner)
 	input.SetType("email")

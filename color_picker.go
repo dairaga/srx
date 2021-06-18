@@ -8,8 +8,6 @@ type (
 	}
 )
 
-// -----------------------------------------------------------------------------
-
 func ColorPicker(owner TComponent) TColorPicker {
 	input := newInput(owner)
 	input.SetType("color")

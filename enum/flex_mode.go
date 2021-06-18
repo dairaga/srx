@@ -14,16 +14,12 @@ const fmName = `flex-rowflex-column`
 
 var fmIndex = [...]uint8{0, 0, 8, 19}
 
-// -----------------------------------------------------------------------------
-
 func (i FlexMode) String() string {
 	if int(i) >= 0 && int(i) < len(fmIndex)-1 {
 		return fmName[fmIndex[i]:fmIndex[i+1]]
 	}
 	return FlexModeNone.String()
 }
-
-// -----------------------------------------------------------------------------
 
 func (i FlexMode) Apply(obj ObjRef) bool {
 	if i == FlexModeNone {
@@ -37,8 +33,6 @@ func (i FlexMode) Apply(obj ObjRef) bool {
 	}
 	return true
 }
-
-// -----------------------------------------------------------------------------
 
 func (i FlexMode) Unapply(obj ObjRef) bool {
 	if i == FlexModeNone {

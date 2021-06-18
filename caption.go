@@ -22,19 +22,13 @@ type (
 
 var _ TCaption = &caption{}
 
-// -----------------------------------------------------------------------------
-
 func (c *caption) Caption() string {
 	return c.Element.Text()
 }
 
-// -----------------------------------------------------------------------------
-
 func (c *caption) SetCaption(caption string) {
 	c.Element.SetText(caption)
 }
-
-// -----------------------------------------------------------------------------
 
 func newCaption(content string) *caption {
 	ret := &caption{
@@ -44,13 +38,9 @@ func newCaption(content string) *caption {
 	return ret
 }
 
-// -----------------------------------------------------------------------------
-
 func Caption(a ...interface{}) TCaption {
 	return newCaption(fmt.Sprint(a...))
 }
-
-// -----------------------------------------------------------------------------
 
 func Captionf(format string, a ...interface{}) TCaption {
 	return newCaption(fmt.Sprintf(format, a...))

@@ -8,8 +8,6 @@ type (
 	}
 )
 
-// -----------------------------------------------------------------------------
-
 func Password(owner TComponent) TPassword {
 	input := newInput(owner)
 	input.SetType("password")

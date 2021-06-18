@@ -26,19 +26,13 @@ type (
 
 var _ TComponent = &component{}
 
-// -----------------------------------------------------------------------------
-
 func (com *component) Tattoo() string {
 	return com.Attr(srxTattoo)
 }
 
-// -----------------------------------------------------------------------------
-
 func (com *component) Owner() TComponent {
 	return com.owner
 }
-
-// -----------------------------------------------------------------------------
 
 func (com *component) Add(child TComponent) {
 	if child != nil && child.OK() {
@@ -52,13 +46,9 @@ func (com *component) Add(child TComponent) {
 	}
 }
 
-// -----------------------------------------------------------------------------
-
 func (com *component) Remove(child TComponent) {
 	delete(com.children, child.Tattoo())
 }
-
-// -----------------------------------------------------------------------------
 
 func (com *component) Release() {
 	for _, v := range com.children {
@@ -72,8 +62,6 @@ func (com *component) Release() {
 	com.object.Release()
 }
 
-// -----------------------------------------------------------------------------
-
 func newComponent(owner TComponent, el *js.Element) *component {
 	el.SetAttr(srxTattoo, tattoo())
 	return &component{
@@ -82,8 +70,6 @@ func newComponent(owner TComponent, el *js.Element) *component {
 		children: make(map[string]TComponent),
 	}
 }
-
-// -----------------------------------------------------------------------------
 
 func Component(owner TComponent, el *js.Element) TComponent {
 	return newComponent(owner, el)

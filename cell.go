@@ -24,8 +24,6 @@ type (
 
 var _ TCell = &cell{}
 
-// -----------------------------------------------------------------------------
-
 func Cell(children ...TObject) TCell {
 	ret := &cell{
 		object: newObject(js.Create("div")),

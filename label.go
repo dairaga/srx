@@ -26,37 +26,25 @@ type (
 
 var _ TLabel = &label{}
 
-// -----------------------------------------------------------------------------
-
 func (lb *label) For() string {
 	return lb.Element.Attr("for")
 }
-
-// -----------------------------------------------------------------------------
 
 func (lb *label) SetFor(f string) {
 	lb.Element.SetAttr("for", f)
 }
 
-// -----------------------------------------------------------------------------
-
 func (lb *label) Caption() string {
 	return lb.Text()
 }
-
-// -----------------------------------------------------------------------------
 
 func (lb *label) SetCaption(caption string) {
 	lb.Element.SetText((caption))
 }
 
-// -----------------------------------------------------------------------------
-
 func (lb *label) Horizontal() bool {
 	return lb.Ref().Contains("col-form-label")
 }
-
-// -----------------------------------------------------------------------------
 
 func (lb *label) SetHorizontal(h bool) {
 	lb.Ref().Remove("col-form-label", "form-label")
@@ -66,8 +54,6 @@ func (lb *label) SetHorizontal(h bool) {
 		lb.Ref().Add("form-label")
 	}
 }
-
-// -----------------------------------------------------------------------------
 
 func newLabel(owner TComponent, class string) *label {
 	el := js.Create("label").Add(class)
@@ -79,8 +65,6 @@ func newLabel(owner TComponent, class string) *label {
 	}
 	return ret
 }
-
-// -----------------------------------------------------------------------------
 
 func Label(owner TComponent) TLabel {
 	return newLabel(owner, `form-label`)

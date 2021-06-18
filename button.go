@@ -34,19 +34,13 @@ type (
 
 var _ TButton = &button{}
 
-// -----------------------------------------------------------------------------
-
 func (btn *button) Caption() string {
 	return btn.caption.Caption()
 }
 
-// -----------------------------------------------------------------------------
-
 func (btn *button) SetCaption(c string) {
 	btn.caption.SetCaption(c)
 }
-
-// -----------------------------------------------------------------------------
 
 func (btn *button) Type() enum.ButtonType {
 	var t enum.ButtonType
@@ -54,25 +48,17 @@ func (btn *button) Type() enum.ButtonType {
 	return t
 }
 
-// -----------------------------------------------------------------------------
-
 func (btn *button) SetType(typ enum.ButtonType) {
 	btn.SetAttr("type", typ.String())
 }
-
-// -----------------------------------------------------------------------------
 
 func (btn *button) Value() string {
 	return btn.Attr("value")
 }
 
-// -----------------------------------------------------------------------------
-
 func (btn *button) SetValue(v string) {
 	btn.SetAttr("value", v)
 }
-
-// -----------------------------------------------------------------------------
 
 func (btn *button) setOutlineColor(outline bool, color enum.Color) {
 	handled := false
@@ -97,43 +83,29 @@ func (btn *button) setOutlineColor(outline bool, color enum.Color) {
 	btn.bgColor = color
 }
 
-// -----------------------------------------------------------------------------
-
 func (btn *button) Color() enum.Color {
 	return btn.color
 }
-
-// -----------------------------------------------------------------------------
 
 func (btn *button) SetColor(c enum.Color) {
 	btn.setOutlineColor(btn.outline, c)
 }
 
-// -----------------------------------------------------------------------------
-
 func (btn *button) Background() enum.Color {
 	return btn.Color()
 }
-
-// -----------------------------------------------------------------------------
 
 func (btn *button) SetBackground(c enum.Color) {
 	btn.SetColor(c)
 }
 
-// -----------------------------------------------------------------------------
-
 func (btn *button) Outline() bool {
 	return btn.outline
 }
 
-// -----------------------------------------------------------------------------
-
 func (btn *button) SetOutline(outline bool) {
 	btn.setOutlineColor(outline, btn.color)
 }
-
-// -----------------------------------------------------------------------------
 
 func (btn *button) SetSize(s enum.Size) {
 	btn.Element.Remove(btn.Size().Style("btn"))
@@ -148,13 +120,9 @@ func (btn *button) SetSize(s enum.Size) {
 	btn.object.SetSize(s)
 }
 
-// -----------------------------------------------------------------------------
-
 func (btn *button) Click() {
 	btn.Element.Call("click")
 }
-
-// -----------------------------------------------------------------------------
 
 func (btn *button) OnClick(fn func(TButton, js.TEvent)) {
 	cb := js.FuncOf(func(this js.Value, args []js.Value) interface{} {
@@ -165,8 +133,6 @@ func (btn *button) OnClick(fn func(TButton, js.TEvent)) {
 	})
 	btn.EventTarget.On("click", cb)
 }
-
-// -----------------------------------------------------------------------------
 
 func Button(owner TComponent) TButton {
 	caption := Caption()

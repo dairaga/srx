@@ -27,32 +27,22 @@ type (
 
 var _ TSpinner = &spinner{}
 
-// -----------------------------------------------------------------------------
-
 func (s *spinner) Type() enum.SpinnerType {
 	return s.typ
 }
-
-// -----------------------------------------------------------------------------
 
 func (s *spinner) SetType(t enum.SpinnerType) {
 	s.Element.Replace(s.typ.String(), t.String())
 	s.typ = t
 }
 
-// -----------------------------------------------------------------------------
-
 func (s *spinner) Description() string {
 	return s.assist.Description()
 }
 
-// -----------------------------------------------------------------------------
-
 func (s *spinner) SetDescription(d string) {
 	s.assist.SetDescription(d)
 }
-
-// -----------------------------------------------------------------------------
 
 func Spinner(owner TComponent) TSpinner {
 	assist := Assist()

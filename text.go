@@ -8,8 +8,6 @@ type (
 	}
 )
 
-// -----------------------------------------------------------------------------
-
 func Text(owner TComponent) TText {
 	input := newInput(owner)
 	input.SetType("text")

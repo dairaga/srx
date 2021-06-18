@@ -31,16 +31,12 @@ const szName = "0123456789101112auto50100smmdlgxl"
 
 var szIndex = [...]uint8{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 20, 22, 25, 27, 29, 31, 33}
 
-// -----------------------------------------------------------------------------
-
 func (i Size) String() string {
 	if int(i) >= 0 && int(i) < len(szIndex)-1 {
 		return szName[szIndex[i]:szIndex[i+1]]
 	}
 	return N0.String()
 }
-
-// -----------------------------------------------------------------------------
 
 func (i *Size) SetString(s string) {
 	for k := 0; k < len(szIndex)-1; k++ {
@@ -52,13 +48,9 @@ func (i *Size) SetString(s string) {
 	*i = N0
 }
 
-// -----------------------------------------------------------------------------
-
 func (i Size) Style(s string) string {
 	return s + "-" + i.String()
 }
-
-// -----------------------------------------------------------------------------
 
 func (i Size) Col() string {
 	if i >= N1 && i <= Auto {
@@ -66,8 +58,6 @@ func (i Size) Col() string {
 	}
 	return "col"
 }
-
-// -----------------------------------------------------------------------------
 
 func (i Size) Gutter(pos Pos) string {
 	if pos != X && pos != Y && pos != All {
@@ -80,20 +70,30 @@ func (i Size) Gutter(pos Pos) string {
 	return "g" + pos.String() + "-" + N1.String()
 }
 
-// -----------------------------------------------------------------------------
-
-func (i Size) ApplyFontSize(obj ObjRef) (ret bool) {
+func (i Size) ApplyFont(obj ObjRef) (ret bool) {
 	if ret = (i >= N1 && i <= N6); ret {
 		obj.Ref().Add("fs-" + i.String())
 	}
 	return
 }
 
-// -----------------------------------------------------------------------------
-
-func (i Size) UnapplyFontSize(obj ObjRef) (ret bool) {
+func (i Size) UnapplyFont(obj ObjRef) (ret bool) {
 	if ret = (i >= N1 && i <= N6); ret {
 		obj.Ref().Remove("fs-" + i.String())
+	}
+	return
+}
+
+func (i Size) ApplyBorder(obj ObjRef) (ret bool) {
+	if ret = (i >= N1 && i <= N5); ret {
+		obj.Ref().Add("border-" + i.String())
+	}
+	return
+}
+
+func (i Size) UnapplyBorder(obj ObjRef) (ret bool) {
+	if ret = (i >= N1 && i <= N5); ret {
+		obj.Ref().Remove("border-" + i.String())
 	}
 	return
 }
