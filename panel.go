@@ -20,7 +20,7 @@ var _ TPanel = &panel{}
 
 // -----------------------------------------------------------------------------
 
-func PanelOf(owner TComponent) TPanel {
+func Panel(owner TComponent) TPanel {
 	ret := &panel{
 		component: newComponent(owner, js.Create("div")),
 	}
