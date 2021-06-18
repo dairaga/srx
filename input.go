@@ -1,15 +1,14 @@
 // +build js,wasm
 
-package form
+package srx
 
 import (
-	"github.com/dairaga/srx"
 	"github.com/dairaga/srx/js"
 )
 
 type (
 	TBaseFormControl interface {
-		srx.TComponent
+		TComponent
 		Name() string
 		SetName(n string)
 
@@ -35,7 +34,7 @@ type (
 	}
 
 	input struct {
-		*srx.Component
+		*component
 	}
 )
 
@@ -110,17 +109,17 @@ func (i *input) SetPlaceholder(h string) {
 
 // -----------------------------------------------------------------------------
 
-func newInput(owner srx.TComponent) *input {
+func newInput(owner TComponent) *input {
 	return newFormControl(owner, "input", "form-control")
 }
 
 // -----------------------------------------------------------------------------
 
-func newFormControl(owner srx.TComponent, tagName, class string) *input {
+func newFormControl(owner TComponent, tagName, class string) *input {
 	el := js.Create(tagName).Add(class)
 
 	ret := &input{
-		Component: srx.NewComponent(owner, el),
+		component: newComponent(owner, el),
 	}
 	if owner != nil {
 		owner.Add(ret)
@@ -131,6 +130,6 @@ func newFormControl(owner srx.TComponent, tagName, class string) *input {
 
 // -----------------------------------------------------------------------------
 
-func InputOf(owner srx.TComponent) TInput {
+func Input(owner TComponent) TInput {
 	return newInput(owner)
 }
