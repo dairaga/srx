@@ -11,9 +11,6 @@ type (
 	TBadge interface {
 		TComponent
 
-		Type() enum.RoundType
-		SetType(t enum.RoundType)
-
 		Value() string
 		SetValue(v string)
 
@@ -25,25 +22,10 @@ type (
 		*component
 		caption TCaption
 		assist  TAssist
-		//color   enum.Color
-		typ enum.RoundType
 	}
 )
 
 var _ TBadge = &badge{}
-
-// -----------------------------------------------------------------------------
-
-func (b *badge) Type() enum.RoundType {
-	return b.typ
-}
-
-// -----------------------------------------------------------------------------
-
-func (b *badge) SetType(t enum.RoundType) {
-	t.Replace(b.Element, b.typ)
-	b.typ = t
-}
 
 // -----------------------------------------------------------------------------
 
@@ -113,7 +95,6 @@ func Badge(owner TComponent) TBadge {
 		component: newComponent(owner, el),
 		caption:   caption,
 		assist:    assist,
-		typ:       enum.RoundNone,
 	}
 	b.Element.Append(caption)
 	b.Element.Append(assist)

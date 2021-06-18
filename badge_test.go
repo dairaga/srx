@@ -54,18 +54,18 @@ func TestBadge(t *testing.T) {
 	assert.False(t, b.(*badge).Contains("text-dark"))
 
 	/* type */
-	assert.Equal(t, enum.RoundNone, b.Type())
+	assert.Equal(t, enum.RoundedNone, b.Rounded())
 
-	b.SetType(enum.RoundCircle)
-	assert.Equal(t, enum.RoundCircle, b.Type())
-	assert.True(t, b.(*badge).Contains(enum.RoundCircle.String()))
+	b.SetRounded(enum.RoundedCircle)
+	assert.Equal(t, enum.RoundedCircle, b.Rounded())
+	assert.True(t, b.(*badge).Contains(enum.RoundedCircle.String()))
 
-	b.SetType(enum.RoundPill)
-	assert.Equal(t, enum.RoundPill, b.Type())
-	assert.True(t, b.(*badge).Contains(enum.RoundPill.String()))
+	b.SetRounded(enum.RoundedPill)
+	assert.Equal(t, enum.RoundedPill, b.Rounded())
+	assert.True(t, b.(*badge).Contains(enum.RoundedPill.String()))
 
-	b.SetType(enum.RoundNone)
-	assert.Equal(t, enum.RoundNone, b.Type())
-	assert.False(t, b.(*badge).Contains(enum.RoundCircle.String()))
-	assert.False(t, b.(*badge).Contains(enum.RoundPill.String()))
+	b.SetRounded(enum.RoundedNone)
+	assert.Equal(t, enum.RoundedNone, b.Rounded())
+	assert.False(t, b.(*badge).Contains(enum.RoundedCircle.String()))
+	assert.False(t, b.(*badge).Contains(enum.RoundedPill.String()))
 }

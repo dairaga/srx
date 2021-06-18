@@ -47,6 +47,12 @@ type (
 		AlignHorizontal(al enum.Align)
 		AlignVertical(al enum.Align)
 
+		FontSize() enum.Size
+		SetFontSize(s enum.Size)
+
+		Rounded() enum.RoundedType
+		SetRounded(r enum.RoundedType)
+
 		Size() enum.Size
 		SetSize(s enum.Size)
 
@@ -62,6 +68,8 @@ type (
 	object struct {
 		*js.Element
 		size    enum.Size
+		fs      enum.Size
+		rounded enum.RoundedType
 		color   enum.Color
 		bgColor enum.Color
 
@@ -141,6 +149,36 @@ func (obj *object) AlignVertical(al enum.Align) {
 		obj.alV = al
 	}
 
+}
+
+// -----------------------------------------------------------------------------
+
+func (obj *object) FontSize() enum.Size {
+	return obj.fs
+}
+
+// -----------------------------------------------------------------------------
+
+func (obj *object) SetFontSize(s enum.Size) {
+	if obj.fs != s && (s == enum.N0 || s.ApplyFontSize(obj)) {
+		obj.fs.UnapplyFontSize(obj)
+		obj.fs = s
+	}
+}
+
+// -----------------------------------------------------------------------------
+
+func (obj *object) Rounded() enum.RoundedType {
+	return obj.rounded
+}
+
+// -----------------------------------------------------------------------------
+
+func (obj *object) SetRounded(r enum.RoundedType) {
+	if obj.rounded != r && (r == enum.RoundedNone || r.Apply(obj)) {
+		obj.rounded.Unapply(obj)
+		obj.rounded = r
+	}
 }
 
 // -----------------------------------------------------------------------------

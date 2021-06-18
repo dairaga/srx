@@ -79,3 +79,21 @@ func (i Size) Gutter(pos Pos) string {
 	}
 	return "g" + pos.String() + "-" + N1.String()
 }
+
+// -----------------------------------------------------------------------------
+
+func (i Size) ApplyFontSize(obj ObjRef) (ret bool) {
+	if ret = (i >= N1 && i <= N6); ret {
+		obj.Ref().Add("fs-" + i.String())
+	}
+	return
+}
+
+// -----------------------------------------------------------------------------
+
+func (i Size) UnapplyFontSize(obj ObjRef) (ret bool) {
+	if ret = (i >= N1 && i <= N6); ret {
+		obj.Ref().Remove("fs-" + i.String())
+	}
+	return
+}
