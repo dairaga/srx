@@ -40,14 +40,14 @@ func TestGrid(t *testing.T) {
 	old := enum.AlignNone
 	for _, v := range al {
 		if v.IsHorizontal() {
-			old = g.(*grid).h
+			old = g.(*grid).alH
 			g.AlignHorizontal(v)
 			assert.True(t, g.Ref().Contains(v.Horizontal()))
 			if old != enum.AlignNone {
 				assert.False(t, g.Ref().Contains(old.Horizontal()))
 			}
 		} else if v.IsVertical() {
-			old = g.(*grid).v
+			old = g.(*grid).alV
 			g.AlignVertical(v)
 			assert.True(t, g.Ref().Contains(v.Vertical()))
 			if old != enum.AlignNone {
