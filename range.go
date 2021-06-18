@@ -1,11 +1,9 @@
 // +build js,wasm
 
-package form
+package srx
 
 import (
 	"strconv"
-
-	"github.com/dairaga/srx"
 )
 
 type (
@@ -83,7 +81,7 @@ func (r *rangeInput) SetStep(v int) {
 
 // -----------------------------------------------------------------------------
 
-func RangeOf(owner srx.TComponent) TRange {
+func Range(owner TComponent) TRange {
 	ret := &rangeInput{
 		input: newFormControl(owner, "input", "form-range"),
 	}

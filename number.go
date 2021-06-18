@@ -1,14 +1,12 @@
 // +build js,wasm
 
-package form
-
-import "github.com/dairaga/srx"
+package srx
 
 type TNumber = TRange
 
 // -----------------------------------------------------------------------------
 
-func NumberOf(owner srx.TComponent) TNumber {
+func Number(owner TComponent) TNumber {
 	ret := &rangeInput{
 		input: newInput(owner),
 	}

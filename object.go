@@ -42,6 +42,11 @@ type (
 		Background() enum.Color
 		SetBackground(c enum.Color)
 
+		FlexMode() enum.FlexMode
+		SetFlexMode(m enum.FlexMode)
+		AlignHorizontal(al enum.Align)
+		AlignVertical(al enum.Align)
+
 		Size() enum.Size
 		SetSize(s enum.Size)
 
@@ -59,6 +64,10 @@ type (
 		size    enum.Size
 		color   enum.Color
 		bgColor enum.Color
+
+		flexMode enum.FlexMode
+		alH      enum.Align
+		alV      enum.Align
 	}
 )
 
@@ -79,8 +88,8 @@ func (obj *object) Color() enum.Color {
 // -----------------------------------------------------------------------------
 
 func (obj *object) SetColor(c enum.Color) {
-	obj.color.UnapplyTextColor(obj)
-	if c.ApplyTextColor(obj) {
+	if obj.color != c && (c == enum.None || c.ApplyTextColor(obj)) {
+		obj.color.UnapplyTextColor(obj)
 		obj.color = c
 	}
 }
@@ -94,10 +103,44 @@ func (obj *object) Background() enum.Color {
 // -----------------------------------------------------------------------------
 
 func (obj *object) SetBackground(c enum.Color) {
-	obj.color.UnapplyBackground(obj)
-	if c.ApplyBackground(obj) {
+	if obj.bgColor != c && (c == enum.None || c.ApplyBackground(obj)) {
+		obj.bgColor.UnapplyBackground(obj)
 		obj.bgColor = c
 	}
+}
+
+// -----------------------------------------------------------------------------
+
+func (obj *object) FlexMode() enum.FlexMode {
+	return obj.flexMode
+}
+
+// -----------------------------------------------------------------------------
+
+func (obj *object) SetFlexMode(m enum.FlexMode) {
+	if obj.flexMode != m && m.Apply(obj) {
+		obj.flexMode.Unapply(obj)
+		obj.flexMode = m
+	}
+}
+
+// -----------------------------------------------------------------------------
+
+func (obj *object) AlignHorizontal(al enum.Align) {
+	if obj.alH != al && (al == enum.AlignNone || al.ApplyHorizontal(obj)) {
+		obj.alH.UnapplyHorizontal(obj)
+		obj.alH = al
+	}
+}
+
+// -----------------------------------------------------------------------------
+
+func (obj *object) AlignVertical(al enum.Align) {
+	if obj.alV != al && (al == enum.AlignNone || al.ApplyVertical(obj)) {
+		obj.alV.UnapplyVertical(obj)
+		obj.alV = al
+	}
+
 }
 
 // -----------------------------------------------------------------------------

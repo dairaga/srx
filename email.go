@@ -1,10 +1,6 @@
 // +build js,wasm
 
-package form
-
-import (
-	"github.com/dairaga/srx"
-)
+package srx
 
 type (
 	TEmail interface {
@@ -14,7 +10,7 @@ type (
 
 // -----------------------------------------------------------------------------
 
-func EmailOf(owner srx.TComponent) TEmail {
+func Email(owner TComponent) TEmail {
 	input := newInput(owner)
 	input.SetType("email")
 	return input

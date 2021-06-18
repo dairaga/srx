@@ -13,7 +13,7 @@ func TestFlexMode(t *testing.T) {
 	data := map[FlexMode]string{
 		FlexModeRow:    "flex-row",
 		FlexModeColumn: "flex-column",
-		FlexMode(1000): "flex-row",
+		FlexMode(1000): "",
 	}
 
 	for k, v := range data {

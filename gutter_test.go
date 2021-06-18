@@ -1,12 +1,10 @@
 // +build js,wasm
 
-package std
+package srx
 
 import (
 	"testing"
 
-	"github.com/dairaga/srx"
-	"github.com/dairaga/srx/el"
 	"github.com/dairaga/srx/enum"
 	"github.com/dairaga/srx/js"
 	"github.com/stretchr/testify/assert"
@@ -14,10 +12,10 @@ import (
 
 func TestGutter(t *testing.T) {
 
-	g := GutterPanelOf(srx.Root())
+	g := GutterPanel(Root())
 
 	for i := 0; i < 3; i++ {
-		g.Append(el.Captionf("gutter-item-%d", i+1))
+		g.Append(Captionf("gutter-item-%d", i+1))
 	}
 	js.Append(g)
 
@@ -51,7 +49,7 @@ func TestGutter(t *testing.T) {
 	for i := range items {
 		per := items[i]
 		count := 12 / int(per)
-		g := GutterPanelOf(srx.Root())
+		g := GutterPanel(Root())
 		g.SetMargin(enum.Y, enum.N3)
 		g.SetPadding(enum.X, enum.N3)
 
@@ -59,7 +57,7 @@ func TestGutter(t *testing.T) {
 		g.SetItemsPerRow(per)
 
 		for j := 0; j < count; j++ {
-			g.Append(el.Captionf("gutter-%d-item-%d", count, i+1))
+			g.Append(Captionf("gutter-%d-item-%d", count, i+1))
 		}
 		js.Append(g)
 

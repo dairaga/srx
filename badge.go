@@ -93,20 +93,14 @@ func (b *badge) SetBackground(c enum.Color) {
 	if !c.IsTheme() {
 		return
 	}
-	switch b.bgColor {
-	case enum.Warning, enum.Info, enum.Light:
-		enum.Dark.UnapplyTextColor(b)
-		fallthrough
-	default:
-		b.bgColor.UnapplyBackground(b)
-	}
+
 	switch c {
 	case enum.Warning, enum.Info, enum.Light:
 		b.component.SetColor(enum.Dark)
-		fallthrough
 	default:
-		b.component.SetBackground(c)
+		b.component.SetColor(enum.None)
 	}
+	b.component.SetBackground(c)
 }
 
 // -----------------------------------------------------------------------------

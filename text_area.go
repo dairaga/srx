@@ -1,11 +1,10 @@
 // +build js,wasm
 
-package form
+package srx
 
 import (
 	"strconv"
 
-	"github.com/dairaga/srx"
 	"github.com/dairaga/srx/js"
 )
 
@@ -16,7 +15,7 @@ type (
 	}
 
 	textarea struct {
-		*srx.Component
+		*component
 	}
 )
 
@@ -93,11 +92,11 @@ func (t *textarea) SetRows(rows int) {
 
 // -----------------------------------------------------------------------------
 
-func TextareaOf(owner srx.TComponent) TTextarea {
+func Textarea(owner TComponent) TTextarea {
 	el := js.Create("textarea").Add("form-control").SetAttr("rows", "3")
 
 	ret := &textarea{
-		Component: srx.NewComponent(owner, el),
+		component: newComponent(owner, el),
 	}
 	if owner != nil {
 		owner.Add(ret)

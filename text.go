@@ -1,21 +1,17 @@
 // +build js,wasm
 
-package form
-
-import (
-	"github.com/dairaga/srx"
-)
+package srx
 
 type (
-	TFile interface {
+	TText interface {
 		TBaseInput
 	}
 )
 
 // -----------------------------------------------------------------------------
 
-func FileOf(owner srx.TComponent) TFile {
+func Text(owner TComponent) TText {
 	input := newInput(owner)
-	input.SetType("file")
+	input.SetType("text")
 	return input
 }

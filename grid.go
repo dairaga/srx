@@ -10,16 +10,16 @@ import (
 type (
 	TGridPanel interface {
 		TComponent
-		AlignHorizontal(al enum.Align)
-		AlignVertical(al enum.Align)
+		//AlignHorizontal(al enum.Align)
+		//AlignVertical(al enum.Align)
 		AddCell(span enum.Size, children ...TObject) TCell
 		TCeller
 	}
 
 	grid struct {
 		*component
-		h     enum.Align
-		v     enum.Align
+		//h     enum.Align
+		//v     enum.Align
 		cells []TCell
 	}
 )
@@ -28,28 +28,28 @@ var _ TGridPanel = &grid{}
 
 // -----------------------------------------------------------------------------
 
-func (g *grid) AlignHorizontal(al enum.Align) {
-	if h := g.h.Horizontal(); h != "" {
-		g.Element.Remove(h)
-	}
-
-	if h := al.Horizontal(); h != "" {
-		g.Element.Add(h)
-	}
-	g.h = al
-}
-
-// -----------------------------------------------------------------------------
-
-func (g *grid) AlignVertical(al enum.Align) {
-	if v := g.v.Vertical(); v != "" {
-		g.Element.Remove(v)
-	}
-	if v := al.Vertical(); v != "" {
-		g.Element.Add(v)
-	}
-	g.v = al
-}
+//func (g *grid) AlignHorizontal(al enum.Align) {
+//	if h := g.h.Horizontal(); h != "" {
+//		g.Element.Remove(h)
+//	}
+//
+//	if h := al.Horizontal(); h != "" {
+//		g.Element.Add(h)
+//	}
+//	g.h = al
+//}
+//
+//// -----------------------------------------------------------------------------
+//
+//func (g *grid) AlignVertical(al enum.Align) {
+//	if v := g.v.Vertical(); v != "" {
+//		g.Element.Remove(v)
+//	}
+//	if v := al.Vertical(); v != "" {
+//		g.Element.Add(v)
+//	}
+//	g.v = al
+//}
 
 // -----------------------------------------------------------------------------
 
@@ -99,8 +99,8 @@ func (g *grid) CellLen() int {
 func GridPanel(owner TComponent) TGridPanel {
 	ret := &grid{
 		component: newComponent(owner, js.Create("div").Add("row")),
-		h:         enum.AlignNone,
-		v:         enum.AlignNone,
+		//h:         enum.AlignNone,
+		//v:         enum.AlignNone,
 	}
 	if owner != nil {
 		owner.Add(ret)

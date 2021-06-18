@@ -1,14 +1,12 @@
 // +build js,wasm
 
-package form
+package srx
 
 import (
 	"testing"
 
-	"github.com/dairaga/srx"
 	"github.com/dairaga/srx/enum"
 	"github.com/dairaga/srx/js"
-	"github.com/dairaga/srx/std"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -19,7 +17,7 @@ func TestInput(t *testing.T) {
 	readonly := false
 	required := false
 
-	input := InputOf(srx.Root())
+	input := Input(Root())
 	js.Append(input)
 
 	/* init */
@@ -49,89 +47,89 @@ func TestInput(t *testing.T) {
 
 	/* View All */
 
-	container := srx.NewComponent(
-		srx.Root(),
+	container := newComponent(
+		Root(),
 		js.From(`<div class="container"></div>`),
 	)
 
-	form := srx.NewComponent(
+	form := newComponent(
 		container,
 		js.Create("form"),
 	)
 	container.Append(form)
 	js.Append(container)
 
-	gutter := std.GutterPanelOf(form)
+	gutter := GutterPanel(form)
 	gutter.SetGutterSize(enum.N3, enum.N3)
 	gutter.SetItemsPerRow(enum.N2PerRow)
 	form.Append(gutter)
 
-	email := EmailOf(gutter)
+	email := Email(gutter)
 	email.SetID("test_email")
-	lb := LabelOf(gutter)
+	lb := Label(gutter)
 	lb.SetCaption("email")
 	lb.SetFor(email.ID())
 	gutter.Append(lb, email)
 
-	password := PasswordOf(gutter)
+	password := Password(gutter)
 	password.SetID("test_password")
-	lb = LabelOf(gutter)
+	lb = Label(gutter)
 	lb.SetCaption("password")
 	lb.SetFor(password.ID())
 	gutter.Append(lb, password)
 
-	name2 := TextOf(gutter)
+	name2 := Text(gutter)
 	name2.SetID("test_name")
-	lb = LabelOf(gutter)
+	lb = Label(gutter)
 	lb.SetCaption("name")
 	lb.SetFor(name2.ID())
 	gutter.Append(lb, name2)
 
-	color := ColorPickerOf(gutter)
+	color := ColorPicker(gutter)
 	color.SetID("test_color")
-	lb = LabelOf(gutter)
+	lb = Label(gutter)
 	lb.SetCaption("color")
 	lb.SetFor(color.ID())
 	gutter.Append(lb, color)
 
-	file := FileOf(gutter)
+	file := File(gutter)
 	file.SetID("test_file")
-	lb = LabelOf(gutter)
+	lb = Label(gutter)
 	lb.SetCaption("file")
 	lb.SetFor(file.ID())
 	gutter.Append(lb, file)
 
-	rng := RangeOf(gutter)
+	rng := Range(gutter)
 	rng.SetID("test_range")
-	lb = LabelOf(gutter)
+	lb = Label(gutter)
 	lb.SetCaption("range")
 	lb.SetFor(rng.ID())
 	gutter.Append(lb, rng)
 
-	num := NumberOf(gutter)
+	num := Number(gutter)
 	num.SetID("test_number")
-	lb = LabelOf(gutter)
+	lb = Label(gutter)
 	lb.SetCaption("number")
 	lb.SetFor(num.ID())
 	gutter.Append(lb, num)
 
-	sel := SelectOf(gutter)
+	sel := Select(gutter)
 	sel.AddOption("test1", "1")
 	sel.AddOption("test2", "2")
 	sel.AddOption("test3", "3")
 	sel.SetValue("2")
 	sel.SetID("test_sel")
-	lb = LabelOf(gutter)
+	lb = Label(gutter)
 	lb.SetCaption("select")
 	lb.SetFor(sel.ID())
 	gutter.Append(lb, sel)
 
-	ckgroup := CheckGroupOf(gutter)
+	ckgroup := CheckGroup(gutter)
 	ckgroup.SetName("test_check")
 	ckgroup.SetInline(true)
 	ckgroup.AddCheck("A", "AAA", true)
 	ckgroup.AddCheck("B", "BBB", false)
-	lb = LabelOf(gutter)
+	lb = Label(gutter)
 	lb.SetCaption("checkbox")
 	gutter.Append(lb, ckgroup)
 	assert.EqualValues(t, []string{"A"}, ckgroup.Value())
@@ -140,7 +138,7 @@ func TestInput(t *testing.T) {
 	assert.True(t, ckgroup.Child(0).Checked())
 	assert.True(t, ckgroup.Child(1).Checked())
 
-	ragroup := RadioGroupOf(gutter)
+	ragroup := RadioGroup(gutter)
 	ragroup.SetName("test_Radio")
 	ragroup.SetInline(true)
 	ragroup.AddRadio("Y", "Yes", true)
@@ -154,7 +152,7 @@ func TestInput(t *testing.T) {
 	assert.False(t, ragroup.Child(0).Checked())
 	assert.True(t, ragroup.Child(1).Checked())
 
-	lb = LabelOf(gutter)
+	lb = Label(gutter)
 	lb.SetCaption("radio")
 	gutter.Append(lb, ragroup)
 }
