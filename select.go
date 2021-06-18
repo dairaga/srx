@@ -1,9 +1,8 @@
 // +build js,wasm
 
-package form
+package srx
 
 import (
-	"github.com/dairaga/srx"
 	"github.com/dairaga/srx/js"
 )
 
@@ -33,7 +32,7 @@ func (s *sel) AddOption(caption, value string) {
 
 // -----------------------------------------------------------------------------
 
-func SelectOf(owner srx.TComponent) TSelect {
+func Select(owner TComponent) TSelect {
 	return &sel{
 		input: newFormControl(owner, "select", "form-select"),
 		//opts:  nil,

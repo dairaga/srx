@@ -1,10 +1,6 @@
 // +build js,wasm
 
-package form
-
-import (
-	"github.com/dairaga/srx"
-)
+package srx
 
 type (
 	TPassword interface {
@@ -14,7 +10,7 @@ type (
 
 // -----------------------------------------------------------------------------
 
-func PasswordOf(owner srx.TComponent) TPassword {
+func Password(owner TComponent) TPassword {
 	input := newInput(owner)
 	input.SetType("password")
 	return input

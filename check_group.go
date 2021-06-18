@@ -1,9 +1,8 @@
 // +build js,wasm
 
-package form
+package srx
 
 import (
-	"github.com/dairaga/srx"
 	"github.com/dairaga/srx/js"
 )
 
@@ -17,7 +16,7 @@ type (
 	//TRadio = TCheck
 
 	TBaseCheckGroup interface {
-		srx.TComponent
+		TComponent
 		Name() string
 		SetName(name string)
 		Inline() bool
@@ -39,7 +38,7 @@ type (
 	}
 
 	basecheckgroup struct {
-		*srx.Component
+		*component
 		name     string
 		inline   bool
 		children []TCheck
@@ -68,7 +67,7 @@ func (c *check) SetCheck(checked bool) {
 
 // -----------------------------------------------------------------------------
 
-func newCheckControl(owner srx.TComponent, tagName string) *check {
+func newCheckControl(owner TComponent, tagName string) *check {
 	input := newFormControl(owner, "input", "form-check-input")
 	input.SetType(tagName)
 	ret := &check{
@@ -79,19 +78,19 @@ func newCheckControl(owner srx.TComponent, tagName string) *check {
 
 // -----------------------------------------------------------------------------
 
-func newCheck(owner srx.TComponent) *check {
+func newCheck(owner TComponent) *check {
 	return newCheckControl(owner, "checkbox")
 }
 
 // -----------------------------------------------------------------------------
 
-func CheckOf(owner srx.TComponent) TCheck {
+func CheckOf(owner TComponent) TCheck {
 	return newCheck(owner)
 }
 
 // -----------------------------------------------------------------------------
 
-//func newRadio(owner srx.TComponent) *check {
+//func newRadio(owner TComponent) *check {
 //	input := newFormControl(owner, "input", "form-check-input")
 //	input.SetType("radio")
 //	ret := &check{
@@ -102,7 +101,7 @@ func CheckOf(owner srx.TComponent) TCheck {
 
 // -----------------------------------------------------------------------------
 
-//func RadioOf(owner srx.TComponent) TRadio {
+//func RadioOf(owner TComponent) TRadio {
 //	return newRadio(owner)
 //}
 
@@ -214,10 +213,10 @@ func (g *checkgroup) AddCheck(value, caption string, checked bool) (TCheck, TLab
 
 // -----------------------------------------------------------------------------
 
-func CheckGroupOf(owner srx.TComponent) TCheckGroup {
+func CheckGroup(owner TComponent) TCheckGroup {
 	g := &checkgroup{
 		basecheckgroup: &basecheckgroup{
-			Component: srx.NewComponent(owner, js.Create("div")),
+			component: newComponent(owner, js.Create("div")),
 			inline:    false,
 			name:      "",
 		},

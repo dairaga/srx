@@ -1,9 +1,8 @@
 // +build js,wasm
 
-package form
+package srx
 
 import (
-	"github.com/dairaga/srx"
 	"github.com/dairaga/srx/js"
 )
 
@@ -25,13 +24,13 @@ var _ TRadioGroup = &radiogroup{}
 
 // -----------------------------------------------------------------------------
 
-func newRadio(owner srx.TComponent) *check {
+func newRadio(owner TComponent) *check {
 	return newCheckControl(owner, "radio")
 }
 
 // -----------------------------------------------------------------------------
 
-func RadioOf(owner srx.TComponent) TRadio {
+func RadioOf(owner TComponent) TRadio {
 	return newRadio(owner)
 }
 
@@ -85,10 +84,10 @@ func (g *radiogroup) AddRadio(value, caption string, checked bool) (TRadio, TLab
 
 // -----------------------------------------------------------------------------
 
-func RadioGroupOf(owner srx.TComponent) TRadioGroup {
+func RadioGroup(owner TComponent) TRadioGroup {
 	g := &radiogroup{
 		basecheckgroup: &basecheckgroup{
-			Component: srx.NewComponent(owner, js.Create("div")),
+			component: newComponent(owner, js.Create("div")),
 			inline:    false,
 			name:      "",
 		},
