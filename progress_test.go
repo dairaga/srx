@@ -29,6 +29,7 @@ func TestProgress(t *testing.T) {
 	assert.True(t, bar1.Striped())
 	assert.True(t, bar1.Ref().Contains("progress-bar-striped"))
 	assert.True(t, bar1.Ref().Contains("progress-bar-animated"))
+	assert.True(t, bar1.Ref().Contains(enum.Primary.Style("bg")))
 
 	bar2 := ProgressBar(p)
 	bar2.SetColor(enum.Info)
@@ -42,5 +43,6 @@ func TestProgress(t *testing.T) {
 	assert.True(t, bar2.Striped())
 	assert.True(t, bar2.Ref().Contains("progress-bar-striped"))
 	assert.True(t, bar2.Ref().Contains("progress-bar-animated"))
+	assert.True(t, bar2.Ref().Contains(enum.Info.Style("bg")))
 
 }
