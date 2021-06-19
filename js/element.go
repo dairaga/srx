@@ -181,7 +181,8 @@ func (el *Element) Replace(oldName, newName string) *Element {
 }
 
 func (el *Element) Contains(name string) bool {
-	return el.class("contains", name).Bool()
+	v := el.class("contains", name)
+	return v.Truthy() && v.Bool()
 }
 
 func (el *Element) style(method string, args ...string) Value {
