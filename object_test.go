@@ -25,3 +25,31 @@ func TestObjectFontSize(t *testing.T) {
 		}
 	}
 }
+
+func TestObjectBorder(t *testing.T) {
+	panel := Panel(Root())
+	js.Append(panel)
+
+	data := []enum.BorderType{
+		enum.Border,
+		enum.BorderTop,
+		enum.BorderEnd,
+		enum.BorderBottom,
+		enum.BorderStart,
+		enum.Border0,
+		enum.BorderTop0,
+		enum.BorderEnd0,
+		enum.BorderBottom0,
+		enum.BorderStart0,
+		//enum.BorderNone,
+	}
+
+	for _, v := range data {
+		old := panel.Border()
+		panel.SetBorder(v)
+		assert.True(t, panel.Ref().Contains(v.String()))
+		if old != enum.BorderNone {
+			assert.False(t, panel.Ref().Contains(old.String()))
+		}
+	}
+}
