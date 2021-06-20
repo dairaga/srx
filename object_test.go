@@ -97,3 +97,28 @@ func TestObjectItalic(t *testing.T) {
 	assert.False(t, caption.Italic())
 	assert.False(t, caption.Ref().Contains("fst-italic"))
 }
+
+func TestObjectDecoration(t *testing.T) {
+	caption := Caption("Test Decoration")
+	js.Append(caption)
+	assert.Equal(t, enum.DecorationReset, caption.Decoration())
+
+	data := []enum.Decoration{
+		enum.DecorationNone,
+		enum.DecorationUnderline,
+		enum.DecorationLineThrough,
+		enum.DecorationReset,
+	}
+
+	for _, d := range data {
+		old := caption.Decoration()
+		caption.SetDecoration(d)
+		if d != enum.DecorationReset {
+			assert.True(t, caption.Ref().Contains(d.String()))
+		}
+		assert.Equal(t, d, caption.Decoration())
+		if old != enum.DecorationReset {
+			assert.False(t, caption.Ref().Contains(old.String()))
+		}
+	}
+}

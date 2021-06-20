@@ -56,6 +56,9 @@ type (
 		Italic() bool
 		SetItalic(i bool)
 
+		Decoration() enum.Decoration
+		SetDecoration(d enum.Decoration)
+
 		Rounded() enum.RoundedType
 		SetRounded(r enum.RoundedType)
 
@@ -96,8 +99,9 @@ type (
 		alH      enum.Align
 		alV      enum.Align
 
-		fs enum.Size
-		fw enum.FontWeight
+		fs         enum.Size
+		fw         enum.FontWeight
+		decoration enum.Decoration
 	}
 )
 
@@ -186,6 +190,17 @@ func (obj *object) SetItalic(i bool) {
 		obj.Add("fst-italic")
 	} else {
 		obj.Remove("fst-italic")
+	}
+}
+
+func (obj *object) Decoration() enum.Decoration {
+	return obj.decoration
+}
+
+func (obj *object) SetDecoration(d enum.Decoration) {
+	if obj.decoration != d && (d == enum.DecorationReset || d.Apply(obj)) {
+		obj.decoration.Unapply(obj)
+		obj.decoration = d
 	}
 }
 
