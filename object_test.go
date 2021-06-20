@@ -41,15 +41,44 @@ func TestObjectBorder(t *testing.T) {
 		enum.BorderEnd0,
 		enum.BorderBottom0,
 		enum.BorderStart0,
-		//enum.BorderNone,
+		enum.BorderNone,
 	}
 
 	for _, v := range data {
 		old := panel.Border()
 		panel.SetBorder(v)
-		assert.True(t, panel.Ref().Contains(v.String()))
+		if v != enum.BorderNone {
+			assert.True(t, panel.Ref().Contains(v.String()))
+		}
 		if old != enum.BorderNone {
 			assert.False(t, panel.Ref().Contains(old.String()))
 		}
 	}
+}
+
+func TestFontWeight(t *testing.T) {
+	caption := Caption("test font weight")
+
+	js.Append(caption)
+
+	data := []enum.FontWeight{
+		enum.FontWeightBold,
+		enum.FontWeightBolder,
+		enum.FontWeightNormal,
+		enum.FontWeightLight,
+		enum.FontWeightLighter,
+		enum.FontWeightNone,
+	}
+
+	for _, fw := range data {
+		old := caption.FontWeight()
+		caption.SetFontWeight(fw)
+		if fw != enum.FontWeightNone {
+			assert.True(t, caption.Ref().Contains(fw.String()))
+		}
+		if old != enum.FontWeightNone {
+			assert.False(t, caption.Ref().Contains(old.String()))
+		}
+	}
+
 }

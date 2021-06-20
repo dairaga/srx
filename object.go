@@ -50,6 +50,9 @@ type (
 		FontSize() enum.Size
 		SetFontSize(s enum.Size)
 
+		FontWeight() enum.FontWeight
+		SetFontWeight(w enum.FontWeight)
+
 		Rounded() enum.RoundedType
 		SetRounded(r enum.RoundedType)
 
@@ -76,8 +79,8 @@ type (
 
 	object struct {
 		*js.Element
-		size    enum.Size
-		fs      enum.Size
+		size enum.Size
+
 		rounded enum.RoundedType
 		color   enum.Color
 		bgColor enum.Color
@@ -89,6 +92,9 @@ type (
 		flexMode enum.FlexMode
 		alH      enum.Align
 		alV      enum.Align
+
+		fs enum.Size
+		fw enum.FontWeight
 	}
 )
 
@@ -154,6 +160,17 @@ func (obj *object) SetFontSize(s enum.Size) {
 	if obj.fs != s && (s == enum.N0 || s.ApplyFont(obj)) {
 		obj.fs.UnapplyFont(obj)
 		obj.fs = s
+	}
+}
+
+func (obj *object) FontWeight() enum.FontWeight {
+	return obj.fw
+}
+
+func (obj *object) SetFontWeight(w enum.FontWeight) {
+	if obj.fw != w && (w == enum.FontWeightNone || w.Apply(obj)) {
+		obj.fw.Unapply(obj)
+		obj.fw = w
 	}
 }
 
