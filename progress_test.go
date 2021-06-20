@@ -17,11 +17,11 @@ func TestProgress(t *testing.T) {
 	p.Animate(true)
 	js.Append(p)
 
-	bar1 := ProgressBar(p)
-	bar1.SetColor(enum.Primary)
-	bar1.SetValue(50)
-	bar1.SetCaption("abc")
-	p.AddBar(bar1)
+	bar1 := p.AddBar(50, "abc", enum.Primary)
+	bar2 := p.AddBar(25, "def", enum.Info)
+
+	assert.Equal(t, bar1, p.Bars()[0])
+	assert.Equal(t, bar2, p.Bars()[1])
 
 	assert.Equal(t, "abc", bar1.Caption())
 	assert.Equal(t, 50, bar1.Value())
@@ -30,12 +30,6 @@ func TestProgress(t *testing.T) {
 	assert.True(t, bar1.Ref().Contains("progress-bar-striped"))
 	assert.True(t, bar1.Ref().Contains("progress-bar-animated"))
 	assert.True(t, bar1.Ref().Contains(enum.Primary.Style("bg")))
-
-	bar2 := ProgressBar(p)
-	bar2.SetColor(enum.Info)
-	bar2.SetValue(25)
-	bar2.SetCaption("def")
-	p.AddBar(bar2)
 
 	assert.Equal(t, "def", bar2.Caption())
 	assert.Equal(t, 25, bar2.Value())

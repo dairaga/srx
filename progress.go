@@ -12,8 +12,8 @@ import (
 type (
 	TProgress interface {
 		TComponent
-		AddBar(bar TProgressBar)
 		Bars() []TProgressBar
+		AddBar(value int, caption string, color enum.Color) TProgressBar
 
 		Striped() bool
 		Stripe(s bool)
@@ -53,11 +53,29 @@ type (
 var _ TProgress = &progress{}
 var _ TProgressBar = &progressbar{}
 
-func (p *progress) AddBar(bar TProgressBar) {
-	bar.Stripe(p.striped)
-	bar.Animate(p.animated)
-	p.bars = append(p.bars, bar)
+func (p *progress) Append(children ...TObject) {
+	for i := range children {
+		item, ok := children[i].(TProgressBar)
+		if ok && item != nil {
+			item.Animate(p.animated)
+			item.Stripe(p.striped)
+			p.bars = append(p.bars, item)
+		}
+	}
+	p.component.Append(children...)
+}
+
+func (p *progress) Prepend(children ...TObject) {
+	p.Append(children...)
+}
+
+func (p *progress) AddBar(value int, caption string, color enum.Color) TProgressBar {
+	bar := newProgressBar(p)
+	bar.SetValue(value)
+	bar.SetCaption(caption)
+	bar.SetColor(color)
 	p.Append(bar)
+	return bar
 }
 
 func (p *progress) Bars() []TProgressBar {
