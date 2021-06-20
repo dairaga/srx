@@ -125,6 +125,7 @@ func TestInput(t *testing.T) {
 	gutter.Append(lb, sel)
 
 	ckgroup := CheckGroup(gutter)
+	ckgroup.Switch(true)
 	ckgroup.SetName("test_check")
 	ckgroup.SetInline(true)
 	ckgroup.AddCheck("A", "AAA", true)
@@ -154,5 +155,6 @@ func TestInput(t *testing.T) {
 
 	lb = Label(gutter)
 	lb.SetCaption("radio")
+	ragroup.Switch(true)
 	gutter.Append(lb, ragroup)
 }

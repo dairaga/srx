@@ -17,10 +17,16 @@ type (
 
 	TBaseCheckGroup interface {
 		TComponent
+
 		Name() string
 		SetName(name string)
+
 		Inline() bool
 		SetInline(inline bool)
+
+		Switched() bool
+		Switch(s bool)
+
 		Children() []TCheck
 		Child(index int) TCheck
 		ChildLen() int
@@ -42,6 +48,7 @@ type (
 		name     string
 		inline   bool
 		children []TCheck
+		switched bool
 	}
 
 	checkgroup struct {
@@ -107,6 +114,21 @@ func (g *basecheckgroup) SetInline(inline bool) {
 	g.inline = inline
 }
 
+func (g *basecheckgroup) Switched() bool {
+	return g.switched
+}
+
+func (g *basecheckgroup) Switch(s bool) {
+	g.switched = s
+	g.Ref().QueryAll(".form-check").Foreach(func(_ int, el *js.Element) {
+		if g.switched {
+			el.Add("form-switch")
+		} else {
+			el.Remove("form-switch")
+		}
+	})
+}
+
 func (g *basecheckgroup) Children() []TCheck {
 	return g.children
 }
@@ -161,6 +183,10 @@ func (g *checkgroup) AddCheck(value, caption string, checked bool) (TCheck, TLab
 	if g.inline {
 		div.Add("form-check-inline")
 	}
+	if g.switched {
+		div.Add("form-switch")
+	}
+
 	check := newCheck(g)
 	check.SetName(g.name)
 	check.SetID(g.name + "_" + value)
@@ -183,6 +209,7 @@ func CheckGroup(owner TComponent) TCheckGroup {
 			component: newComponent(owner, js.Create("div")),
 			inline:    false,
 			name:      "",
+			switched:  false,
 		},
 	}
 
