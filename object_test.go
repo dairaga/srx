@@ -82,3 +82,18 @@ func TestFontWeight(t *testing.T) {
 	}
 
 }
+
+func TestObjectItalic(t *testing.T) {
+	caption := Caption("Test Italic")
+	js.Append(caption)
+
+	assert.False(t, caption.Italic())
+
+	caption.SetItalic(true)
+	assert.True(t, caption.Italic())
+	assert.True(t, caption.Ref().Contains("fst-italic"))
+
+	caption.SetItalic(false)
+	assert.False(t, caption.Italic())
+	assert.False(t, caption.Ref().Contains("fst-italic"))
+}

@@ -53,6 +53,9 @@ type (
 		FontWeight() enum.FontWeight
 		SetFontWeight(w enum.FontWeight)
 
+		Italic() bool
+		SetItalic(i bool)
+
 		Rounded() enum.RoundedType
 		SetRounded(r enum.RoundedType)
 
@@ -171,6 +174,18 @@ func (obj *object) SetFontWeight(w enum.FontWeight) {
 	if obj.fw != w && (w == enum.FontWeightNone || w.Apply(obj)) {
 		obj.fw.Unapply(obj)
 		obj.fw = w
+	}
+}
+
+func (obj *object) Italic() bool {
+	return obj.Contains("fst-italic")
+}
+
+func (obj *object) SetItalic(i bool) {
+	if i {
+		obj.Add("fst-italic")
+	} else {
+		obj.Remove("fst-italic")
 	}
 }
 
