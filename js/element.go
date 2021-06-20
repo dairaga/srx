@@ -78,11 +78,13 @@ func (el *Element) TagName() string {
 }
 
 func (el *Element) ID() string {
-	return el.Attr("id")
+	//return el.Attr("id")
+	return el.Prop("id").String()
 }
 
 func (el *Element) SetID(id string) {
-	el.SetAttr("id", id)
+	//el.SetAttr("id", id)
+	el.SetProp("id", id)
 }
 
 func (el *Element) Text() string {

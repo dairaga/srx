@@ -3,6 +3,7 @@
 package js_test
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/dairaga/srx/js"
@@ -166,4 +167,22 @@ func TestDisabled(t *testing.T) {
 
 	el.Enable()
 	assert.False(t, el.Disabled())
+}
+
+func TestRelease(t *testing.T) {
+	p1 := js.Create("div")
+	p1.SetID("test_release_1")
+	p2 := js.Create("div")
+	p2.SetID("test_release_2")
+	c1 := js.Create("div").SetText("child 1")
+	c2 := js.Create("div").SetText("child 2")
+
+	p1.Append(c1)
+	p2.Append(c2)
+	js.Append(p1)
+	js.Append(p2)
+
+	c1.Release()
+	fmt.Println(c1.OK())
+	p2.Append(c1)
 }
