@@ -15,6 +15,9 @@ type (
 		SetCaption(caption string)
 	}
 
+	TStrong = TCaption
+	TSmall  = TCaption
+
 	caption struct {
 		*object
 	}
@@ -30,18 +33,34 @@ func (c *caption) SetCaption(caption string) {
 	c.Element.SetText(caption)
 }
 
-func newCaption(content string) *caption {
+func newCaption(tag, content string) *caption {
 	ret := &caption{
-		object: newObject(js.Create("span")),
+		object: newObject(js.Create(tag)),
 	}
 	ret.SetCaption(content)
 	return ret
 }
 
 func Caption(a ...interface{}) TCaption {
-	return newCaption(fmt.Sprint(a...))
+	return newCaption("span", fmt.Sprint(a...))
 }
 
 func Captionf(format string, a ...interface{}) TCaption {
-	return newCaption(fmt.Sprintf(format, a...))
+	return newCaption("span", fmt.Sprintf(format, a...))
+}
+
+func Strong(a ...interface{}) TStrong {
+	return newCaption("strong", fmt.Sprint(a...))
+}
+
+func Strongf(format string, a ...interface{}) TStrong {
+	return newCaption("strong", fmt.Sprintf(format, a...))
+}
+
+func Small(a ...interface{}) TSmall {
+	return newCaption("small", fmt.Sprint(a...))
+}
+
+func Smallf(format string, a ...interface{}) TSmall {
+	return newCaption("small", fmt.Sprintf(format, a...))
 }
