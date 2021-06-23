@@ -17,6 +17,6 @@ func (bs *BS) Dispose() {
 }
 
 func Alert(value js.Wrapper) *BS {
-	val := bootstrap.Get("Alert").Call("getOrCreateInstance", value)
+	val := bootstrap.Get("Alert").New(value)
 	return &BS{Value: val}
 }
