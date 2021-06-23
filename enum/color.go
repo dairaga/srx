@@ -141,3 +141,17 @@ func (i Color) UnapplyBorder(obj ObjRef) (ret bool) {
 	}
 	return
 }
+
+func (i Color) ApplyAlert(obj ObjRef) (ret bool) {
+	if ret = i.IsTheme(); ret {
+		obj.Ref().Add(i.Style("alert"))
+	}
+	return
+}
+
+func (i Color) UnapplyAlert(obj ObjRef) (ret bool) {
+	if ret = i.IsTheme(); ret {
+		obj.Ref().Remove(i.Style("alert"))
+	}
+	return
+}

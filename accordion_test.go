@@ -33,4 +33,37 @@ func TestAccordion(t *testing.T) {
 		))
 	items[0].Active(true)
 	assert.EqualValues(t, items, a.Items())
+
+	parentID := a.ID()
+
+	for i := range items {
+		headerID := items[i].Ref().Query(".accordion-header").ID()
+		collapseID := items[i].Ref().Query(".accordion-collapse").ID()
+
+		assert.Equal(t,
+			items[i].Ref().Query(".accordion-collapse").Attr("data-bs-parent"),
+			"#"+parentID)
+
+		assert.Equal(t,
+			items[i].Ref().Query(".accordion-collapse").Attr("aria-labelledby"),
+			headerID)
+
+		assert.Equal(t,
+			items[i].Ref().Query(".accordion-button").Attr("data-bs-target"),
+			"#"+collapseID)
+		assert.Equal(t,
+			items[i].Ref().Query(".accordion-button").Attr("aria-controls"),
+			collapseID,
+		)
+	}
+
+	assert.True(t, items[0].Ref().Query(".accordion-collapse").Contains("show"))
+
+	a.SetID("test_accordion")
+	parentID = a.ID()
+	for i := range items {
+		assert.Equal(t,
+			items[i].Ref().Query(".accordion-collapse").Attr("data-bs-parent"),
+			"#"+parentID)
+	}
 }
