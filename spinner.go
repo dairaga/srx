@@ -44,21 +44,20 @@ func (s *spinner) SetDescription(d string) {
 	s.assist.SetDescription(d)
 }
 
-func Spinner(owner TComponent) TSpinner {
+func newSpinner(owner TComponent) *spinner {
 	assist := Assist()
 	el := js.From(`<div class="text-dark spinner-border" role="status"></div>`)
 	ret := &spinner{
-		component: newComponent(owner, el),
+		component: newComponent(el),
 		assist:    assist,
 	}
 	ret.Element.Append(assist)
 	ret.color = enum.Dark
 	ret.typ = enum.SpinnerBorder
-	//ret.SetColor(enum.Dark)
-	//ret.SetType(enum.SpinnerBorder)
-
-	if owner != nil {
-		owner.Add(ret)
-	}
+	bindOwner(owner, ret)
 	return ret
+}
+
+func Spinner(owner TComponent) TSpinner {
+	return newSpinner(owner)
 }

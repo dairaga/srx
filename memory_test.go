@@ -11,8 +11,8 @@ import (
 
 func TestMemory(t *testing.T) {
 
-	testCom := Component(Root(), js.From(js.HTML(`<div>TestMemory</div>`)))
-	Root().Add(testCom)
+	testCom := Component(js.From(js.HTML(`<div>TestMemory</div>`)))
+	bindOwner(Root(), testCom)
 
 	com := mem.lookup(testCom)
 	tattoo := testCom.Tattoo()

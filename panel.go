@@ -18,12 +18,14 @@ type (
 
 var _ TPanel = &panel{}
 
-func Panel(owner TComponent) TPanel {
+func newPanel(owner TComponent) *panel {
 	ret := &panel{
-		component: newComponent(owner, js.Create("div")),
+		component: newComponent(js.Create("div")),
 	}
-	if owner != nil {
-		owner.Add(ret)
-	}
+	bindOwner(owner, ret)
 	return ret
+}
+
+func Panel(owner TComponent) TPanel {
+	return newPanel(owner)
 }

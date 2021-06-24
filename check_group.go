@@ -203,18 +203,20 @@ func (g *checkgroup) AddCheck(value, caption string, checked bool) (TCheck, TLab
 	return check, lb
 }
 
-func CheckGroup(owner TComponent) TCheckGroup {
+func newCheckGroup(owner TComponent) *checkgroup {
 	g := &checkgroup{
 		basecheckgroup: &basecheckgroup{
-			component: newComponent(owner, js.Create("div")),
+			component: newComponent(js.Create("div")),
 			inline:    false,
 			name:      "",
 			switched:  false,
 		},
 	}
 
-	if owner != nil {
-		owner.Add(g)
-	}
+	bindOwner(owner, g)
 	return g
+}
+
+func CheckGroup(owner TComponent) TCheckGroup {
+	return newCheckGroup(owner)
 }

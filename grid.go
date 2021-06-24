@@ -80,14 +80,14 @@ func (g *grid) CellLen() int {
 	return len(g.cells)
 }
 
-func GridPanel(owner TComponent) TGridPanel {
+func newGridPanel(owner TComponent) *grid {
 	ret := &grid{
-		component: newComponent(owner, js.Create("div").Add("row")),
-		//h:         enum.AlignNone,
-		//v:         enum.AlignNone,
+		component: newComponent(js.Create("div").Add("row")),
 	}
-	if owner != nil {
-		owner.Add(ret)
-	}
+	bindOwner(owner, ret)
 	return ret
+}
+
+func GridPanel(owner TComponent) TGridPanel {
+	return newGridPanel(owner)
 }

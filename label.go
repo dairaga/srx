@@ -58,11 +58,9 @@ func (lb *label) SetHorizontal(h bool) {
 func newLabel(owner TComponent, class string) *label {
 	el := js.Create("label").Add(class)
 	ret := &label{
-		component: newComponent(owner, el),
+		component: newComponent(el),
 	}
-	if owner != nil {
-		owner.Add(ret)
-	}
+	bindOwner(owner, ret)
 	return ret
 }
 

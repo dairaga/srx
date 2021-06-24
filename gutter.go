@@ -75,16 +75,18 @@ func (g *gutter) CellLen() int {
 	return len(g.cells)
 }
 
-func GutterPanel(owner TComponent) TGutterPanel {
+func newGutterPanel(owner TComponent) *gutter {
 	el := js.Create("div").Add("row", "gx-1", "gy-1")
 	ret := &gutter{
-		component: newComponent(owner, el),
+		component: newComponent(el),
 		x:         enum.N1,
 		y:         enum.N1,
 		items:     enum.N1PerRow,
 	}
-	if owner != nil {
-		owner.Add(ret)
-	}
+	bindOwner(owner, ret)
 	return ret
+}
+
+func GutterPanel(owner TComponent) TGutterPanel {
+	return newGutterPanel(owner)
 }

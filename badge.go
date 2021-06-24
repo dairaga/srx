@@ -69,12 +69,12 @@ func (b *badge) SetBackground(c enum.Color) {
 	b.component.SetBackground(c)
 }
 
-func Badge(owner TComponent) TBadge {
+func newBadge(owner TComponent) *badge {
 	caption := Caption()
 	assist := Assist()
 	el := js.From(`<span class="badge"></span>`)
 	b := &badge{
-		component: newComponent(owner, el),
+		component: newComponent(el),
 		caption:   caption,
 		assist:    assist,
 	}
@@ -82,8 +82,10 @@ func Badge(owner TComponent) TBadge {
 	b.Element.Append(assist)
 	b.SetColor(enum.Secondary)
 
-	if owner != nil {
-		owner.Add(b)
-	}
+	bindOwner(owner, b)
 	return b
+}
+
+func Badge(owner TComponent) TBadge {
+	return newBadge(owner)
 }

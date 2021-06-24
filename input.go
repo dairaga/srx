@@ -93,11 +93,9 @@ func newFormControl(owner TComponent, tagName, class string) *input {
 	el := js.Create(tagName).Add(class)
 
 	ret := &input{
-		component: newComponent(owner, el),
+		component: newComponent(el),
 	}
-	if owner != nil {
-		owner.Add(ret)
-	}
+	bindOwner(owner, ret)
 
 	return ret
 }

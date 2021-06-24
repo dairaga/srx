@@ -134,19 +134,21 @@ func (btn *button) OnClick(fn func(TButton, js.TEvent)) {
 	btn.EventTarget.On("click", cb)
 }
 
-func Button(owner TComponent) TButton {
+func newButton(owner TComponent) *button {
 	caption := Caption()
 	el := js.From(js.HTML(`<button type="button" class="btn"></button>`))
 	el.Append(caption)
 
 	btn := &button{
-		component: newComponent(owner, el),
+		component: newComponent(el),
 		caption:   caption,
 		color:     enum.None,
 	}
 
-	if owner != nil {
-		owner.Add(btn)
-	}
+	bindOwner(owner, btn)
 	return btn
+}
+
+func Button(owner TComponent) TButton {
+	return newButton(owner)
 }

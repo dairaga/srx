@@ -48,16 +48,18 @@ func TestInput(t *testing.T) {
 	/* View All */
 
 	container := newComponent(
-		Root(),
 		js.From(`<div class="container"></div>`),
 	)
+	bindOwner(Root(), container)
 
 	form := newComponent(
-		container,
 		js.Create("form"),
 	)
+	bindOwner(container, form)
+
 	container.Append(form)
-	js.Append(container)
+	Append(container)
+	//js.Append(container)
 
 	gutter := GutterPanel(form)
 	gutter.SetGutterSize(enum.N3, enum.N3)

@@ -72,17 +72,19 @@ func (g *radiogroup) AddRadio(value, caption string, checked bool) (TRadio, TLab
 	return check, lb
 }
 
-func RadioGroup(owner TComponent) TRadioGroup {
+func newRadioGroup(owner TComponent) *radiogroup {
 	g := &radiogroup{
 		basecheckgroup: &basecheckgroup{
-			component: newComponent(owner, js.Create("div")),
+			component: newComponent(js.Create("div")),
 			inline:    false,
 			name:      "",
 		},
 	}
 
-	if owner != nil {
-		owner.Add(g)
-	}
+	bindOwner(owner, g)
 	return g
+}
+
+func RadioGroup(owner TComponent) TRadioGroup {
+	return newRadioGroup(owner)
 }

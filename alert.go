@@ -60,7 +60,7 @@ func newAlert(owner TComponent) *alert {
 	el := js.Create("div").Add("alert", "alert-dismissible", "fade", "show").SetAttr("role", "alert")
 	el.Append(js.HTML(`<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`))
 	ret := &alert{
-		component: newComponent(owner, el),
+		component: newComponent(el),
 		bs:        bootstrap.Alert(el),
 	}
 
@@ -84,9 +84,7 @@ func newAlert(owner TComponent) *alert {
 		return nil
 	}))
 
-	if owner != nil {
-		owner.Add(ret)
-	}
+	bindOwner(owner, ret)
 	return ret
 }
 

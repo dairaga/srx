@@ -72,11 +72,9 @@ func newAccordion(owner TComponent) *accordion {
 	el.SetID(rand(10))
 
 	ret := &accordion{
-		component: newComponent(owner, el),
+		component: newComponent(el),
 	}
-	if owner != nil {
-		owner.Add(ret)
-	}
+	bindOwner(owner, ret)
 	return ret
 }
 
@@ -145,13 +143,9 @@ func newAccordionItem(owner TComponent) *accordionItem {
 		SetID(collapseID)
 
 	ret := &accordionItem{
-		component: newComponent(owner, el),
+		component: newComponent(el),
 	}
-
-	if owner != nil {
-		owner.Add(ret)
-	}
-
+	bindOwner(owner, ret)
 	return ret
 }
 

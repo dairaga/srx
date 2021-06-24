@@ -163,13 +163,11 @@ func newProgressBar(owner TComponent) *progressbar {
 
 	el := js.Create("div").Add("progress-bar").SetAttr("role", "progressbar")
 	ret := &progressbar{
-		component: newComponent(owner, el),
+		component: newComponent(el),
 		value:     0,
 	}
 	ret.SetColor(enum.Primary)
-	if owner != nil {
-		owner.Add(ret)
-	}
+	bindOwner(owner, ret)
 
 	return ret
 }
@@ -180,12 +178,10 @@ func ProgressBar(owner TComponent) TProgressBar {
 
 func newProgress(owner TComponent) *progress {
 	ret := &progress{
-		component: newComponent(owner, js.Create("div").Add("progress")),
+		component: newComponent(js.Create("div").Add("progress")),
 	}
 
-	if owner != nil {
-		owner.Add(ret)
-	}
+	bindOwner(owner, ret)
 	return ret
 }
 

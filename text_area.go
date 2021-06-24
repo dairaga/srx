@@ -70,15 +70,17 @@ func (t *textarea) SetRows(rows int) {
 	t.SetAttr("rows", strconv.Itoa(rows))
 }
 
-func Textarea(owner TComponent) TTextarea {
+func newTextarea(owner TComponent) *textarea {
 	el := js.Create("textarea").Add("form-control").SetAttr("rows", "3")
 
 	ret := &textarea{
-		component: newComponent(owner, el),
+		component: newComponent(el),
 	}
-	if owner != nil {
-		owner.Add(ret)
-	}
+	bindOwner(owner, ret)
 
 	return ret
+}
+
+func Textarea(owner TComponent) TTextarea {
+	return newTextarea(owner)
 }

@@ -118,17 +118,15 @@ func (item *listitem) Enable() {
 func newListGroup(owner TComponent, ordered bool) (ret *listgroup) {
 	if ordered {
 		ret = &listgroup{
-			component: newComponent(owner, js.Create("ol").Add("list-group", "list-group-numbered")),
+			component: newComponent(js.Create("ol").Add("list-group", "list-group-numbered")),
 		}
 	} else {
 		ret = &listgroup{
-			component: newComponent(owner, js.Create("ul").Add("list-group")),
+			component: newComponent(js.Create("ul").Add("list-group")),
 		}
 	}
 
-	if owner != nil {
-		owner.Add(ret)
-	}
+	bindOwner(owner, ret)
 	return
 }
 
@@ -142,12 +140,10 @@ func OrderedListGroup(owner TComponent) TOrderedListGroup {
 
 func newListItem(owner TComponent) *listitem {
 	ret := &listitem{
-		component: newComponent(owner, js.Create("li").Add("list-group-item")),
+		component: newComponent(js.Create("li").Add("list-group-item")),
 	}
 
-	if owner != nil {
-		owner.Add(ret)
-	}
+	bindOwner(owner, ret)
 	return ret
 }
 

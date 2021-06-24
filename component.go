@@ -12,6 +12,7 @@ type (
 		Tattoo() string
 
 		Owner() TComponent
+		setOwner(owner TComponent)
 		Add(child TComponent)
 		Remove(child TComponent)
 		Release()
@@ -32,6 +33,13 @@ func (com *component) Tattoo() string {
 
 func (com *component) Owner() TComponent {
 	return com.owner
+}
+
+func (com *component) setOwner(owner TComponent) {
+	if com.owner != nil {
+		com.owner.Remove(com)
+	}
+	com.owner = owner
 }
 
 func (com *component) Add(child TComponent) {
@@ -62,15 +70,15 @@ func (com *component) Release() {
 	com.object.Release()
 }
 
-func newComponent(owner TComponent, el *js.Element) *component {
+func newComponent(el *js.Element) *component {
 	el.SetAttr(srxTattoo, tattoo())
 	return &component{
 		object:   newObject(el),
-		owner:    owner,
+		owner:    nil,
 		children: make(map[string]TComponent),
 	}
 }
 
-func Component(owner TComponent, el *js.Element) TComponent {
-	return newComponent(owner, el)
+func Component(el *js.Element) TComponent {
+	return newComponent(el)
 }
