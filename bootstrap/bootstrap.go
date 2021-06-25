@@ -16,7 +16,16 @@ func (bs *BS) Dispose() {
 	bs.Call("dispose")
 }
 
+func getOrCreateInstance(inst string, value js.Wrapper) *BS {
+	return &BS{
+		Value: bootstrap.Get(inst).Call("getOrCreateInstance", value),
+	}
+}
+
 func Alert(value js.Wrapper) *BS {
-	val := bootstrap.Get("Alert").New(value)
-	return &BS{Value: val}
+	return getOrCreateInstance("Alert", value)
+}
+
+func Collapse(value js.Wrapper) *BS {
+	return getOrCreateInstance("Collapse", value)
 }
